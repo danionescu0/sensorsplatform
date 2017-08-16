@@ -19,6 +19,8 @@ class SendEmailAlert(BaseTask):
 
 
     def __send_alert(self, subject: str, body: str) -> None:
+        print('emulate email sending')
+        return
         msg = MIMEMultipart()
         msg['From'] = self.address
         msg['To'] = self.notified_address
