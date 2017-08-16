@@ -14,7 +14,7 @@ task_runner.add_task(SendEmailAlert(config.email['email'], config.email['passwor
 task_runner.add_task(StoreData())
 
 parser = argparse.ArgumentParser(description='Tasks')
-parser.add_argument('--specify-task', dest='task', type=str)
+parser.add_argument('--task', dest='task', type=str)
 parser.set_defaults(feature=False)
 args = parser.parse_args()
 print(args.task)
