@@ -5,6 +5,7 @@ from repository.Sensors import Sensors
 from tasks.SendEmailAlert import SendEmailAlert
 from tasks.StoreData import StoreData
 from tasks.TaskRunner import TaskRunner
+from repository.RulesRepository import RulesRepository
 import config
 
 sensors_repo = Sensors(config.rabbitmq_host)
@@ -12,6 +13,8 @@ sensors_repo.connect()
 task_runner = TaskRunner()
 task_runner.add_task(SendEmailAlert(config.email['email'], config.email['password'], config.email['notifiedAddress']))
 task_runner.add_task(StoreData())
+
+rules_repository = RulesRepository(config.mongodb_uri)
 
 parser = argparse.ArgumentParser(description='Tasks')
 parser.add_argument('--task', dest='task', type=str)
