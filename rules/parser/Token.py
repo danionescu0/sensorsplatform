@@ -10,6 +10,7 @@ class Token:
     TYPE_LITERAL_INT = 'literal_int'
     TYPE_LITERAL_TIME = 'literal_time'
     TYPE_CURRENT_TIME = 'time'
+    TYPE_SENSOR = 'sensor'
 
     def __init__(self, type: str, value):
         self.__type = type

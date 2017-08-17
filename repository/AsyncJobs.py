@@ -1,6 +1,6 @@
 import pika
 
-class Sensors:
+class AsyncJobs:
     EXCHANGE_NAME = 'sensors'
 
     def __init__(self, host):
