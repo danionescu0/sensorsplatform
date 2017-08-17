@@ -2,10 +2,10 @@ import tornado.ioloop
 import tornado.web
 
 from web.SensorHandler import SensorHandler
-from repository.Sensors import Sensors
+from repository.AsyncJobs import AsyncJobs
 import config
 
-sensors_repo = Sensors(config.rabbitmq_host)
+sensors_repo = AsyncJobs(config.rabbitmq_host)
 sensors_repo.connect()
 
 def make_app():

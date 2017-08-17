@@ -18,8 +18,8 @@ class Tokenizer:
         ('True|False', Token.TYPE_LITERAL_BOOLEAN),
         ('[0-9]{1,2}\:[0-9]{1,2}', Token.TYPE_LITERAL_TIME),
         ('\d+', Token.TYPE_LITERAL_INT),
+        ('S\[(\w+\:\w+)\]', Token.TYPE_SENSOR),
     ]
-
 
     def tokenize(self, text:str) -> List[Token]:
         cleanned_text = self.__get_cleanned_text(text)
