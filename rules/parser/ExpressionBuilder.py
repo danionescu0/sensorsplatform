@@ -24,8 +24,6 @@ class ExpressionBuilder:
     def build(self):
         ExpressionBuilder.current_token_index = 0
         self.__tokens = self.__tokenizer.tokenize(self.__text)
-        for token in self.__tokens:
-            print('Token type: {0} , token value: {1}: '.format(token.get_type(), token.get_value()))
         self.__expression = self.__evaluate()
 
     def get_expression(self) -> Expression:
@@ -37,7 +35,7 @@ class ExpressionBuilder:
         self.__next_token()
         if token_type in [Token.TYPE_LITERAL_BOOLEAN, Token.TYPE_LITERAL_INT, Token.TYPE_LITERAL_TIME, Token.TYPE_ACTUATOR_STATE]:
             return LiteralExpression(token.get_value())
-        elif token_type == Token.TYPE_CURRENT_TIME:
+        elif token_type == Token.TYPE_CURRENT_TIME or token_type == Token.TYPE_SENSOR:
             return LiteralExpression(token.get_value())
 
         left_expr = self.__evaluate()

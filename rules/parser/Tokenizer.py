@@ -6,8 +6,11 @@ from typing import List
 from rules.parser.Token import Token
 from rules.parser.ParseException import ParseException
 
+from repository.SensorsRepository import SensorsRepository
+
 class Tokenizer:
     __token_rules = [
+        ('S\[(\w+)\]', Token.TYPE_SENSOR),
         ('TIME', Token.TYPE_CURRENT_TIME),
         ('gt', Token.TYPE_EXPR_GREATER),
         ('lt', Token.TYPE_EXPR_LESS),
@@ -18,8 +21,10 @@ class Tokenizer:
         ('True|False', Token.TYPE_LITERAL_BOOLEAN),
         ('[0-9]{1,2}\:[0-9]{1,2}', Token.TYPE_LITERAL_TIME),
         ('\d+', Token.TYPE_LITERAL_INT),
-        ('S\[(\w+\:\w+)\]', Token.TYPE_SENSOR),
     ]
+
+    def __init__(self, sensors_repository: SensorsRepository) -> None:
+        self.__sensors_repository = sensors_repository
 
     def tokenize(self, text:str) -> List[Token]:
         cleanned_text = self.__get_cleanned_text(text)
@@ -45,6 +50,8 @@ class Tokenizer:
             return int(literal_value)
         elif token_type == Token.TYPE_CURRENT_TIME:
             return self.__get_current_time()
+        elif token_type == Token.TYPE_SENSOR:
+            return self.__get_sensor_value(literal_value)
 
         return literal_value
 
@@ -55,3 +62,6 @@ class Tokenizer:
         local_date = initial_date.astimezone(to_zone)
 
         return local_date.strftime('%H:%M')
+
+    def __get_sensor_value(self, literal_value):
+        return int(self.__sensors_repository.get(literal_value).latest_value)
