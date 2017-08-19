@@ -1,5 +1,5 @@
 import argparse
-import json
+import pickle
 
 from container import Container
 
@@ -15,7 +15,7 @@ task_runner = container.get('task_runner')
 
 
 def receiver(ch, method, properties, body):
-    print(" [x] Received %r" % body)
-    task_runner.run(args.task, json.loads(body.decode()))
+    event = pickle.loads(body)
+    task_runner.run(args.task, event)
 
 async_jobs.consume(receiver)

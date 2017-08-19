@@ -1,4 +1,7 @@
 import pika
+import pickle
+
+from model.Event import Event
 
 class AsyncJobs:
     EXCHANGE_NAME = 'sensors'
@@ -12,8 +15,8 @@ class AsyncJobs:
         self.__channel = connection.channel()
         self.__channel.exchange_declare(exchange=self.EXCHANGE_NAME, type='fanout')
 
-    def publish(self, sensor_data):
-        self.__channel.basic_publish(exchange=self.EXCHANGE_NAME, routing_key ='', body = sensor_data)
+    def publish(self, event: Event):
+        self.__channel.basic_publish(exchange=self.EXCHANGE_NAME, routing_key ='', body = pickle.dumps(event))
 
     def consume(self, callback):
         result = self.__channel.queue_declare(exclusive=True)
