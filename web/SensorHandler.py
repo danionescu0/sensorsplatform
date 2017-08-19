@@ -11,6 +11,6 @@ class SensorHandler(tornado.web.RequestHandler):
     def put(self, id):
         self.set_status(200)
         sensor_data = json.loads(self.request.body.decode("utf-8"))
-        sensor = Sensor(id, sensor_data['type'], sensor_data['value'])
+        sensor = Sensor(id, sensor_data['type'], float(sensor_data['value']), None)
         event = Event('sensor', sensor)
         self.__async_jobs.publish(event)

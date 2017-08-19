@@ -31,7 +31,9 @@ class RulesEvaluator(BaseTask):
         for rule in rules:
             print("Checking rule:" + rule.rule_text)
             if self.__rule_checker.is_valid(rule):
-                print('rule: ' + rule.rule_text + ' is valid')
+                print('rule: is valid')
+            else:
+                print('rule is not valid')
 
     def get_name(self):
         return 'rules_evaluator'

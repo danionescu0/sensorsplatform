@@ -11,7 +11,7 @@ class StoreData():
             self.__store_latest_sensor_data(event.model)
 
     def __store_latest_sensor_data(self, sensor: Sensor):
-        self.__sensors_repository.override(sensor)
+        self.__sensors_repository.update(sensor)
 
     def get_name(self):
         return 'store_data'
