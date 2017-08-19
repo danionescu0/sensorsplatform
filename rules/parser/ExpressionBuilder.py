@@ -24,6 +24,8 @@ class ExpressionBuilder:
     def build(self):
         ExpressionBuilder.current_token_index = 0
         self.__tokens = self.__tokenizer.tokenize(self.__text)
+        # for token in self.__tokens:
+        #     print(token.get_type() + '...'  + str(token.get_value()) )
         self.__expression = self.__evaluate()
 
     def get_expression(self) -> Expression:

@@ -1,26 +1,14 @@
-from pymongo import MongoClient
-
+from repository.AbstractMongoRepository import AbstractMongoRepository
 from model.Rule import Rule
 
-class RulesRepository():
-    DATABASE_NAME = 'multi_sensor_platform'
+class RulesRepository(AbstractMongoRepository):
     COLLECTION_NAME = 'rules'
 
     def __init__(self, host_uri: str) -> None:
-        self.__host_uri = host_uri
-        self.__collection = None
+        super(RulesRepository, self).__init__(host_uri)
 
-    def get_for_user(self, userid: int):
-        return self.__hidrate(self.__get_collection().find({'userid' : userid}))
-
-    def __get_collection(self):
-        if None != self.__collection:
-            return self.__collection
-
-        client = MongoClient(self.__host_uri)
-        self.__collection = client[self.DATABASE_NAME][self.COLLECTION_NAME]
-
-        return self.__collection
+    def get_for_user(self, userid: str):
+        return self.__hidrate(self.get_collection().find({'userid' : userid}))
 
     def __hidrate(self, raw_data):
         return [Rule(element['userid'], element['rule_text'], element['triggers']) for element in raw_data]

@@ -1,7 +1,9 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
 from tasks.BaseTask import BaseTask
+from model.Event import Event
 
 class SendEmailAlert(BaseTask):
 
@@ -10,9 +12,12 @@ class SendEmailAlert(BaseTask):
         self.password = password
         self.notified_address = notified_address
 
-    def run(self, event_data):
-        if event_data['type'] == 'PS' and int(event_data['value']) > 1000:
-            self.__send_alert("Got alert!!", "Value is:{0}".format(event_data['value']))
+    def run(self, event):
+        if event.name != 'sensor':
+            return
+        sensor = event.model
+        if sensor.type == 'PS' and int(sensor.latest_value) > 1000:
+            self.__send_alert("Got alert!!", "Value is:{0}".format(sensor.latest_value))
 
     def get_name(self):
         return 'send_alert'

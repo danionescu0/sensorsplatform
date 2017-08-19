@@ -1,18 +1,19 @@
 import tornado.ioloop
 import tornado.web
 
+from container import Container
 from web.SensorHandler import SensorHandler
-from repository.AsyncJobs import AsyncJobs
-import config
 
-sensors_repo = AsyncJobs(config.rabbitmq_host)
+container = Container()
+
+sensors_repo = container.get('async_jobs')
 sensors_repo.connect()
 
 def make_app():
     return tornado.web.Application([
         (
-            r"/sensor/\d*", SensorHandler,
-            dict(sensor_publisher = sensors_repo)
+            r"/sensor/(\d*)", SensorHandler,
+            dict(async_jobs = sensors_repo)
         ),
     ])
 
