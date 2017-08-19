@@ -41,7 +41,8 @@ class Container():
     @staticmethod
     def rules_evaluator():
         return RulesEvaluator(Container.get('rules_repository'), Container.get('sensors_repository'),
-                              Container.get('users_repository'), Container.get('rule_checker'))
+                              Container.get('users_repository'), Container.get('rule_checker'),
+                              Container.get('email_sender'))
 
     @staticmethod
     def task_runner():
