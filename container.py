@@ -1,17 +1,21 @@
 import config
-from repository.AsyncJobs import AsyncJobs
-from tasks.SendEmailAlert import SendEmailAlert
 from tasks.StoreData import StoreData
 from tasks.TaskRunner import TaskRunner
 from tasks.RulesEvaluator import RulesEvaluator
+
 from repository.RulesRepository import RulesRepository
 from repository.SensorsRepository import SensorsRepository
 from repository.UsersRepository import UsersRepository
+from repository.AsyncJobs import AsyncJobs
+
 from rules.parser.ExpressionBuilder import ExpressionBuilder
 from rules.parser.Tokenizer import Tokenizer
 from rules.interpretter.InterpretterContext import InterpretterContext
 from rules.RuleChecker import RuleChecker
 
+from sync_events.SendEmailEvent import SendEmailEvent
+
+from services.EmailSender import EmailSender
 
 class Container():
     @staticmethod
@@ -23,8 +27,12 @@ class Container():
         return AsyncJobs(config.rabbitmq_host)
 
     @staticmethod
-    def send_email_alert():
-        return SendEmailAlert(config.email['email'], config.email['password'], config.email['notifiedAddress'])
+    def send_email_event():
+        return SendEmailEvent()
+
+    @staticmethod
+    def email_sender():
+        return EmailSender(config.email['email'], config.email['password'], config.email['notifiedAddress'])
 
     @staticmethod
     def store_data():
@@ -38,7 +46,6 @@ class Container():
     @staticmethod
     def task_runner():
         task_runner = TaskRunner()
-        task_runner.add_task(Container.get('send_email_alert'))
         task_runner.add_task(Container.get('store_data'))
         task_runner.add_task(Container.get('rules_evaluator'))
 
@@ -58,7 +65,7 @@ class Container():
 
     @staticmethod
     def sensors_repository():
-        return SensorsRepository()
+        return SensorsRepository(config.mongodb_uri)
 
     @staticmethod
     def tokenizer():

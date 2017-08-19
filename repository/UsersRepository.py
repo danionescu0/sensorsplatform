@@ -9,7 +9,6 @@ class UsersRepository(AbstractMongoRepository):
 
     def get_by_sensor_id(self, id: str) -> User:
         result = self.__hidrate(self.get_collection().find({"sensors" : {"$in": [id]}}))
-        print("finding" + str(id))
         if len(result) == 0:
             return None
 
