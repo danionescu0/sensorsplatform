@@ -11,4 +11,10 @@ class RulesRepository(AbstractMongoRepository):
         return self.__hidrate(self.get_collection().find({'userid' : userid}))
 
     def __hidrate(self, raw_data):
-        return [Rule(element['userid'], element['rule_text'], element['triggers']) for element in raw_data]
+        rules = []
+        for element in raw_data:
+            rule = Rule(element['userid'], element['rule_text'], element['triggers'])
+            rule.trigger_min_interval = self.default_val(element, 'trigger_min_interval', 0)
+            rules.append(rule)
+
+        return rules

@@ -12,7 +12,7 @@ container = Container()
 async_jobs = container.get('async_jobs')
 async_jobs.connect()
 task_runner = container.get('task_runner')
-send_email_event = container.get('send_email_event')
+send_email_alert_listener = container.get('send_email_alert_listener')
 
 
 def callback(ch, method, properties, body):
