@@ -16,3 +16,8 @@ class AbstractMongoRepository():
         self.__collection = client[self.DATABASE_NAME][self.COLLECTION_NAME]
 
         return self.__collection
+
+    def default_val(self, dictionary, key, default):
+        if key in dictionary.keys():
+            return dictionary[key]
+        return default

@@ -13,9 +13,12 @@ from rules.parser.Tokenizer import Tokenizer
 from rules.interpretter.InterpretterContext import InterpretterContext
 from rules.RuleChecker import RuleChecker
 
-from sync_events.SendEmailEvent import SendEmailEvent
+from sync_events.ValidRuleEvent import ValidRuleEvent
+
+from listener.SendEmailAlertListener import SendEmailAlertListener
 
 from services.EmailSender import EmailSender
+from services.TimedLock import TimedLock
 
 class Container():
     @staticmethod
@@ -27,8 +30,12 @@ class Container():
         return AsyncJobs(config.rabbitmq_host)
 
     @staticmethod
-    def send_email_event():
-        return SendEmailEvent()
+    def send_email_alert_listener():
+        return SendEmailAlertListener(Container.get('email_sender'))
+
+    @staticmethod
+    def valid_rule_event():
+        return ValidRuleEvent()
 
     @staticmethod
     def email_sender():
@@ -42,7 +49,7 @@ class Container():
     def rules_evaluator():
         return RulesEvaluator(Container.get('rules_repository'), Container.get('sensors_repository'),
                               Container.get('users_repository'), Container.get('rule_checker'),
-                              Container.get('email_sender'))
+                              Container.get('valid_rule_event'))
 
     @staticmethod
     def task_runner():
@@ -58,7 +65,8 @@ class Container():
 
     @staticmethod
     def rule_checker():
-        return RuleChecker(Container.get('expression_builder'), Container.get('interpretter_context'))
+        return RuleChecker(Container.get('expression_builder'), Container.get('interpretter_context'),
+                           Container.get('timed_lock'))
 
     @staticmethod
     def users_repository():
@@ -67,6 +75,10 @@ class Container():
     @staticmethod
     def sensors_repository():
         return SensorsRepository(config.mongodb_uri)
+
+    @staticmethod
+    def timed_lock():
+        return TimedLock(config.redis['host'], config.redis['port'])
 
     @staticmethod
     def tokenizer():
