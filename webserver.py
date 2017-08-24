@@ -1,3 +1,5 @@
+import argparse
+
 import tornado.ioloop
 import tornado.web
 
@@ -17,7 +19,11 @@ def make_app():
         ),
     ])
 
+parser = argparse.ArgumentParser(description='Port')
+parser.add_argument('--port', dest='port', type=str, default=8080)
+args = parser.parse_args()
+
 if __name__ == "__main__":
     app = make_app()
-    app.listen(8080)
+    app.listen(args.port)
     tornado.ioloop.IOLoop.current().start()

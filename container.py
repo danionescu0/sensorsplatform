@@ -1,24 +1,22 @@
-import config
-from tasks.StoreData import StoreData
-from tasks.TaskRunner import TaskRunner
-from tasks.RulesEvaluator import RulesEvaluator
 
+import config
+from listener.SendEmailAlertListener import SendEmailAlertListener
+from repository.AsyncJobs import AsyncJobs
 from repository.RulesRepository import RulesRepository
 from repository.SensorsRepository import SensorsRepository
 from repository.UsersRepository import UsersRepository
-from repository.AsyncJobs import AsyncJobs
-
+from rules.RuleChecker import RuleChecker
+from rules.interpretter.InterpretterContext import InterpretterContext
 from rules.parser.ExpressionBuilder import ExpressionBuilder
 from rules.parser.Tokenizer import Tokenizer
-from rules.interpretter.InterpretterContext import InterpretterContext
-from rules.RuleChecker import RuleChecker
-
-from sync_events.ValidRuleEvent import ValidRuleEvent
-
-from listener.SendEmailAlertListener import SendEmailAlertListener
-
 from services.EmailSender import EmailSender
-from services.TimedLock import TimedLock
+from sync_events.ValidRuleEvent import ValidRuleEvent
+from tasks.RulesEvaluator import RulesEvaluator
+from tasks.StoreData import StoreData
+from tasks.TaskRunner import TaskRunner
+from lock.TimedLock import TimedLock
+from lock.RuleTimedLock import RuleTimedLock
+
 
 class Container():
     @staticmethod
@@ -31,7 +29,7 @@ class Container():
 
     @staticmethod
     def send_email_alert_listener():
-        return SendEmailAlertListener(Container.get('email_sender'))
+        return SendEmailAlertListener(Container.get('email_sender'), Container.get('rule_timed_lock'))
 
     @staticmethod
     def valid_rule_event():
@@ -65,8 +63,7 @@ class Container():
 
     @staticmethod
     def rule_checker():
-        return RuleChecker(Container.get('expression_builder'), Container.get('interpretter_context'),
-                           Container.get('timed_lock'))
+        return RuleChecker(Container.get('expression_builder'), Container.get('interpretter_context'))
 
     @staticmethod
     def users_repository():
@@ -79,6 +76,10 @@ class Container():
     @staticmethod
     def timed_lock():
         return TimedLock(config.redis['host'], config.redis['port'])
+
+    @staticmethod
+    def rule_timed_lock():
+        return RuleTimedLock(Container.get('timed_lock'))
 
     @staticmethod
     def tokenizer():

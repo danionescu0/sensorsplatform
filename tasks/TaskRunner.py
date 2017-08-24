@@ -9,3 +9,6 @@ class TaskRunner():
 
     def add_task(self, task):
         self.__tasks.append(task)
+
+    def list_task_names(self):
+        return [task.get_name() for task in self.__tasks]
