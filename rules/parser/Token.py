@@ -11,6 +11,7 @@ class Token:
     TYPE_LITERAL_TIME = 'literal_time'
     TYPE_CURRENT_TIME = 'time'
     TYPE_SENSOR = 'sensor'
+    TYPE_AVERAGE_SENSOR = 'average_sensor'
 
     def __init__(self, type: str, value):
         self.__type = type
