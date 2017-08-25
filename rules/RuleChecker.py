@@ -13,6 +13,7 @@ class RuleChecker:
         try:
             self.__expression_builder.build()
         except ParseException as e:
+            print(e)
             return False
         statement = self.__expression_builder.get_expression()
         statement.interpret(self.__interpretter_context)

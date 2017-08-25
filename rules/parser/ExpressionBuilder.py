@@ -35,9 +35,9 @@ class ExpressionBuilder:
         token = self.__get_current_token()
         token_type = token.get_type()
         self.__next_token()
-        if token_type in [Token.TYPE_LITERAL_BOOLEAN, Token.TYPE_LITERAL_INT, Token.TYPE_LITERAL_TIME, Token.TYPE_ACTUATOR_STATE]:
-            return LiteralExpression(token.get_value())
-        elif token_type == Token.TYPE_CURRENT_TIME or token_type == Token.TYPE_SENSOR:
+        if token_type in [Token.TYPE_LITERAL_BOOLEAN, Token.TYPE_LITERAL_INT, Token.TYPE_LITERAL_TIME,
+                          Token.TYPE_ACTUATOR_STATE, Token.TYPE_CURRENT_TIME, Token.TYPE_SENSOR,
+                          Token.TYPE_AVERAGE_SENSOR]:
             return LiteralExpression(token.get_value())
 
         left_expr = self.__evaluate()

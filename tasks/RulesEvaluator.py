@@ -31,7 +31,7 @@ class RulesEvaluator(BaseTask):
         if None == rules:
             return
         for rule in rules:
-            print("Checking rule:" + rule.rule_text)
+            print("Checking rule: " + rule.rule_text)
             if self.__rule_checker.is_valid(rule):
                 self.__valid_rule_event.send(rule)
                 print('rule: is valid')

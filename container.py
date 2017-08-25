@@ -9,6 +9,11 @@ from rules.RuleChecker import RuleChecker
 from rules.interpretter.InterpretterContext import InterpretterContext
 from rules.parser.ExpressionBuilder import ExpressionBuilder
 from rules.parser.Tokenizer import Tokenizer
+from rules.parser.AverageSensorTokenConverter import AverageSensorTokenConverter
+from rules.parser.BooleanTokenConverter import BooleanTokenConverter
+from rules.parser.CurrentTimeTokenConverter import CurrentTimeTokenConverter
+from rules.parser.IntTokenConverter import IntTokenConverter
+from rules.parser.SensorTokenConverter import SensorTokenConverter
 from services.EmailSender import EmailSender
 from sync_events.ValidRuleEvent import ValidRuleEvent
 from tasks.RulesEvaluator import RulesEvaluator
@@ -83,7 +88,22 @@ class Container():
 
     @staticmethod
     def tokenizer():
-        return Tokenizer(Container.get('sensors_repository'))
+        tokenizer = Tokenizer()
+        tokenizer.add_token_converter(Container.get('average_sensor_token_converter'))
+        tokenizer.add_token_converter(Container.get('sensor_token_converter'))
+        tokenizer.add_token_converter(BooleanTokenConverter())
+        tokenizer.add_token_converter(CurrentTimeTokenConverter())
+        tokenizer.add_token_converter(IntTokenConverter())
+
+        return tokenizer
+
+    @staticmethod
+    def average_sensor_token_converter():
+        return AverageSensorTokenConverter(Container.get('sensors_repository'))
+
+    @staticmethod
+    def sensor_token_converter():
+        return SensorTokenConverter(Container.get('sensors_repository'))
 
     @staticmethod
     def expression_builder():
