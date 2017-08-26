@@ -24,9 +24,16 @@ from lock.RuleTimedLock import RuleTimedLock
 
 
 class Container():
+    cached = {}
+
     @staticmethod
     def get(service_name):
-        return getattr(Container, service_name)()
+        if service_name in Container.cached.keys():
+            return Container.cached[service_name]
+
+        Container.cached[service_name] = getattr(Container, service_name)()
+
+        return Container.cached[service_name]
 
     @staticmethod
     def async_jobs():
