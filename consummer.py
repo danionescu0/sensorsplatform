@@ -12,14 +12,16 @@ args = parser.parse_args()
 
 container = Container()
 async_jobs = container.get('async_jobs')
-async_jobs.connect()
 task_runner = container.get('task_runner')
+
 if args.list:
     print("Available tasks:")
     print(task_runner.list_task_names())
     sys.exit()
 
+event_name = task_runner.get_event_name_from_task_name(args.task)
 send_email_alert_listener = container.get('send_email_alert_listener')
+async_jobs.register_event(event_name)
 
 def callback(ch, method, properties, body):
     event = pickle.loads(body)

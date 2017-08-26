@@ -5,17 +5,18 @@ import tornado.web
 
 from container import Container
 from web.SensorHandler import SensorHandler
+from model.Event import Event
 
 container = Container()
 
-sensors_repo = container.get('async_jobs')
-sensors_repo.connect()
+async_jobs = container.get('async_jobs')
+async_jobs.register_event(Event.TYPE_SENSOR_RECEIVED)
 
 def make_app():
     return tornado.web.Application([
         (
             r"/sensor/(\d*)", SensorHandler,
-            dict(async_jobs = sensors_repo)
+            dict(async_jobs = async_jobs)
         ),
     ])
 
