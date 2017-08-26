@@ -1,17 +1,30 @@
 from repository.SensorsRepository import SensorsRepository
 from model.Event import Event
-from model.Sensor import Sensor
+from tasks.BaseTask import BaseTask
+from services.AsyncJobs import AsyncJobs
 
-class StoreData():
-    def __init__(self, sensors_repository: SensorsRepository) -> None:
+
+class StoreData(BaseTask):
+    def __init__(self, sensors_repository: SensorsRepository, async_jobs: AsyncJobs) -> None:
         self.__sensors_repository = sensors_repository
+        self.__async_jobs = async_jobs
+        self.__configured_async_jobs = None
+
+    def __get_configured_async_jobs(self):
+        if None is not self.__configured_async_jobs:
+            return self.__configured_async_jobs
+        self.__async_jobs.register_event(Event.TYPE_SENSOR_PERSISTED)
+        self.__configured_async_jobs = self.__async_jobs
+
+        return self.__configured_async_jobs
 
     def run(self, event: Event):
-        if event.name == 'sensor':
-            self.__store_latest_sensor_data(event.model)
-
-    def __store_latest_sensor_data(self, sensor: Sensor):
-        self.__sensors_repository.update(sensor)
+        self.__sensors_repository.update(event.model)
+        sensor_persisted_event = Event(Event.TYPE_SENSOR_PERSISTED, event.model)
+        self.__get_configured_async_jobs().publish(sensor_persisted_event)
 
     def get_name(self):
         return 'store_data'
+
+    def get_subscribed_event(self):
+        return Event.TYPE_SENSOR_RECEIVED

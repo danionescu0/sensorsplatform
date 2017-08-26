@@ -1,14 +1,25 @@
+
+#Manually running project
+````
+python3 webserver.py --port 8080
+python3 consummer.py --task store_data
+python3 consummer.py --task rules_evaluator
+````
+
 #Todo list
+* add logging
+* build a web interface
+* add more rules components
 
-* a limit system for alerts (max 1 per minute or hour etc)
+#Databases
+* RedisIo
+  - for holding "locks"
+* MongoDb
+  - persist user, sensor, rule models
+* Cassandra
+  - long term storage
+  - run jobs to digest the data
 
-
-#Mongodb
-
-> use multi_sensor_platform
-switched to db multi_sensor_platform
-db.rules.insert({"userid": 1, "rule_text" : "and  ( eq(TIME, '8:05'), gt(20, 40) )", "triggers" : ["send_alert","sms"]})
-db.users.insert({ "_id" : { "$oid" : "599868bb677e0457a9137039" }, "id" : 1.0, "username" : "danionescu", "password" : "testpass", "email" : "test@test.com", "phone" : "0726775455", "sensors" : [ 1.0, 2.0, 5.0 ] })
 
 #Running composer
 

@@ -4,8 +4,8 @@ from repository.RulesRepository import RulesRepository
 from repository.SensorsRepository import SensorsRepository
 from rules.RuleChecker import RuleChecker
 from model.Event import Event
-from model.Sensor import Sensor
 from sync_events.ValidRuleEvent import ValidRuleEvent
+
 
 class RulesEvaluator(BaseTask):
     def __init__(self, rules_repository: RulesRepository,
@@ -20,10 +20,7 @@ class RulesEvaluator(BaseTask):
         self.__valid_rule_event = valid_rule_event
 
     def run(self, event: Event):
-        if event.name == 'sensor':
-            self.__process_event(event.model)
-
-    def __process_event(self, sensor: Sensor):
+        sensor = event.model
         user = self.__users_repository.get_by_sensor_id(sensor.id)
         if None == user:
             return
@@ -40,3 +37,6 @@ class RulesEvaluator(BaseTask):
 
     def get_name(self):
         return 'rules_evaluator'
+
+    def get_subscribed_event(self):
+        return Event.TYPE_SENSOR_PERSISTED

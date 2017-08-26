@@ -1,26 +1,25 @@
-
 import config
 from listener.SendEmailAlertListener import SendEmailAlertListener
-from repository.AsyncJobs import AsyncJobs
+from lock.RuleTimedLock import RuleTimedLock
+from lock.TimedLock import TimedLock
 from repository.RulesRepository import RulesRepository
 from repository.SensorsRepository import SensorsRepository
 from repository.UsersRepository import UsersRepository
 from rules.RuleChecker import RuleChecker
 from rules.interpretter.InterpretterContext import InterpretterContext
-from rules.parser.ExpressionBuilder import ExpressionBuilder
-from rules.parser.Tokenizer import Tokenizer
 from rules.parser.AverageSensorTokenConverter import AverageSensorTokenConverter
 from rules.parser.BooleanTokenConverter import BooleanTokenConverter
 from rules.parser.CurrentTimeTokenConverter import CurrentTimeTokenConverter
+from rules.parser.ExpressionBuilder import ExpressionBuilder
 from rules.parser.IntTokenConverter import IntTokenConverter
 from rules.parser.SensorTokenConverter import SensorTokenConverter
+from rules.parser.Tokenizer import Tokenizer
+from services.AsyncJobs import AsyncJobs
 from services.EmailSender import EmailSender
 from sync_events.ValidRuleEvent import ValidRuleEvent
 from tasks.RulesEvaluator import RulesEvaluator
 from tasks.StoreData import StoreData
 from tasks.TaskRunner import TaskRunner
-from lock.TimedLock import TimedLock
-from lock.RuleTimedLock import RuleTimedLock
 
 
 class Container():
@@ -28,6 +27,7 @@ class Container():
 
     @staticmethod
     def get(service_name):
+        return getattr(Container, service_name)()
         if service_name in Container.cached.keys():
             return Container.cached[service_name]
 
@@ -53,7 +53,7 @@ class Container():
 
     @staticmethod
     def store_data():
-        return StoreData(Container.get('sensors_repository'))
+        return StoreData(Container.get('sensors_repository'), Container.get('async_jobs'))
 
     @staticmethod
     def rules_evaluator():
@@ -119,4 +119,3 @@ class Container():
     @staticmethod
     def interpretter_context():
         return InterpretterContext()
-
