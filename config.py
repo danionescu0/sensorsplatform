@@ -7,6 +7,11 @@ redis = {
     'port': 6379
 }
 
+logging = {
+    'log_file': 'log.txt',
+    'log_entries': 20000000
+}
+
 email = {
     'email': '', # sender email
     'password': '', # sender password
