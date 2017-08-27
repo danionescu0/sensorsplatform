@@ -1,3 +1,5 @@
+import sys
+
 import config
 from listener.SendEmailAlertListener import SendEmailAlertListener
 from lock.RuleTimedLock import RuleTimedLock
@@ -16,6 +18,7 @@ from rules.parser.SensorTokenConverter import SensorTokenConverter
 from rules.parser.Tokenizer import Tokenizer
 from services.AsyncJobs import AsyncJobs
 from services.EmailSender import EmailSender
+from services.LoggingConfig import LoggingConfig
 from sync_events.ValidRuleEvent import ValidRuleEvent
 from tasks.RulesEvaluator import RulesEvaluator
 from tasks.StoreData import StoreData
@@ -24,13 +27,14 @@ from tasks.TaskRunner import TaskRunner
 
 class Container():
     cached = {}
+    uncacheable = ['async_jobs']
 
     @staticmethod
     def get(service_name):
-        return getattr(Container, service_name)()
+        if service_name in Container.uncacheable:
+            return getattr(Container, service_name)()
         if service_name in Container.cached.keys():
             return Container.cached[service_name]
-
         Container.cached[service_name] = getattr(Container, service_name)()
 
         return Container.cached[service_name]
@@ -59,7 +63,7 @@ class Container():
     def rules_evaluator():
         return RulesEvaluator(Container.get('rules_repository'), Container.get('sensors_repository'),
                               Container.get('users_repository'), Container.get('rule_checker'),
-                              Container.get('valid_rule_event'))
+                              Container.get('valid_rule_event'), Container.get('logging'))
 
     @staticmethod
     def task_runner():
@@ -119,3 +123,10 @@ class Container():
     @staticmethod
     def interpretter_context():
         return InterpretterContext()
+
+    @staticmethod
+    def logging():
+        logging_config = LoggingConfig(config.logging['log_file'], config.logging['log_entries'])
+        sys.excepthook = logging_config.set_error_hadler
+
+        return logging_config.get_logger()
