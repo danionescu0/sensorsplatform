@@ -13,7 +13,7 @@ class AsyncJobs:
         self.__event_name = event_name
         connection = pika.BlockingConnection(pika.ConnectionParameters(host = self.__host))
         self.__channel = connection.channel()
-        self.__channel.exchange_declare(exchange=event_name, type='fanout')
+        self.__channel.exchange_declare(exchange=event_name, exchange_type='fanout')
 
     def publish(self, event: Event) -> None:
         self.__channel.basic_publish(exchange=event.name, routing_key ='', body = pickle.dumps(event))
