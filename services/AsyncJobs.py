@@ -11,7 +11,7 @@ class AsyncJobs:
 
     def register_event(self, event_name: str):
         self.__event_name = event_name
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host = self.__host))
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host = self.__host, port=5672))
         self.__channel = connection.channel()
         self.__channel.exchange_declare(exchange=event_name, exchange_type='fanout')
 
