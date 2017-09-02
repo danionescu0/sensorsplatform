@@ -45,7 +45,8 @@ class Container():
 
     @staticmethod
     def send_email_alert_listener():
-        return SendEmailAlertListener(Container.get('email_sender'), Container.get('rule_timed_lock'))
+        return SendEmailAlertListener(Container.get('email_sender'), Container.get('rule_timed_lock'),
+                                      Container.get('logging'))
 
     @staticmethod
     def valid_rule_event():
@@ -57,7 +58,7 @@ class Container():
 
     @staticmethod
     def store_data():
-        return StoreData(Container.get('sensors_repository'), Container.get('async_jobs'))
+        return StoreData(Container.get('sensors_repository'), Container.get('async_jobs'), Container.get('logging'))
 
     @staticmethod
     def rules_evaluator():

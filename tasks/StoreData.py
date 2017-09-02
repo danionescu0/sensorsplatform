@@ -1,3 +1,6 @@
+from logging import RootLogger
+import json
+
 from repository.SensorsRepository import SensorsRepository
 from model.Event import Event
 from tasks.BaseTask import BaseTask
@@ -5,9 +8,10 @@ from services.AsyncJobs import AsyncJobs
 
 
 class StoreData(BaseTask):
-    def __init__(self, sensors_repository: SensorsRepository, async_jobs: AsyncJobs) -> None:
+    def __init__(self, sensors_repository: SensorsRepository, async_jobs: AsyncJobs, logging: RootLogger) -> None:
         self.__sensors_repository = sensors_repository
         self.__async_jobs = async_jobs
+        self.__logging = logging
         self.__configured_async_jobs = None
 
     def __get_configured_async_jobs(self):
@@ -22,6 +26,7 @@ class StoreData(BaseTask):
         self.__sensors_repository.update(event.model)
         sensor_persisted_event = Event(Event.TYPE_SENSOR_PERSISTED, event.model)
         self.__get_configured_async_jobs().publish(sensor_persisted_event)
+        self.__logging.debug("Event persisted with id: {0} and value {1}".format(event.model.id, event.model.latest_value))
 
     def get_name(self):
         return 'store_data'
