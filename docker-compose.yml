@@ -27,4 +27,3 @@ services:
         - rabbitmq
         - mongodb
         - redis
-      tty: true
