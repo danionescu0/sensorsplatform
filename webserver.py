@@ -11,12 +11,13 @@ container = Container()
 
 async_jobs = container.get('async_jobs')
 async_jobs.register_event(Event.TYPE_SENSOR_RECEIVED)
+logging = container.get('logging')
 
 def make_app():
     return tornado.web.Application([
         (
             r"/sensor/(\d*)", SensorHandler,
-            dict(async_jobs = async_jobs)
+            dict(async_jobs = async_jobs, logging = logging)
         ),
     ])
 
