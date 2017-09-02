@@ -6,6 +6,6 @@ WORKDIR /root
 RUN mkdir multisensorsplatform
 COPY ./ ./multisensorsplatform/
 RUN pip install -qr ./multisensorsplatform/requirements.txt
-RUN python3 ./multisensorsplatform/webserver.py --port 8080
+CMD python3 ./multisensorsplatform/webserver.py --port 8080
 
 EXPOSE 8080
