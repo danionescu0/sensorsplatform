@@ -15,6 +15,7 @@ from rules.parser.CurrentTimeTokenConverter import CurrentTimeTokenConverter
 from rules.parser.ExpressionBuilder import ExpressionBuilder
 from rules.parser.IntTokenConverter import IntTokenConverter
 from rules.parser.SensorTokenConverter import SensorTokenConverter
+from rules.parser.GisDistanceTokenConverter import GisDistanceTokenConverter
 from rules.parser.Tokenizer import Tokenizer
 from services.AsyncJobs import AsyncJobs
 from services.EmailSender import EmailSender
@@ -100,9 +101,10 @@ class Container():
 
     @staticmethod
     def tokenizer():
-        tokenizer = Tokenizer()
+        tokenizer = Tokenizer(Container.get('logging'))
         tokenizer.add_token_converter(Container.get('average_sensor_token_converter'))
         tokenizer.add_token_converter(Container.get('sensor_token_converter'))
+        tokenizer.add_token_converter(Container.get('gis_distance_token_converter'))
         tokenizer.add_token_converter(BooleanTokenConverter())
         tokenizer.add_token_converter(CurrentTimeTokenConverter())
         tokenizer.add_token_converter(IntTokenConverter())
@@ -116,6 +118,10 @@ class Container():
     @staticmethod
     def sensor_token_converter():
         return SensorTokenConverter(Container.get('sensors_repository'))
+
+    @staticmethod
+    def gis_distance_token_converter():
+        return GisDistanceTokenConverter(Container.get('sensors_repository'))
 
     @staticmethod
     def expression_builder():

@@ -11,7 +11,8 @@ class Token:
     TYPE_LITERAL_TIME = 'literal_time'
     TYPE_CURRENT_TIME = 'time'
     TYPE_SENSOR = 'sensor'
-    TYPE_AVERAGE_SENSOR = 'average_sensor'
+    TYPE_AVERAGE_NUMERICAL_SENSOR = 'average_numerical_sensor'
+    TYPE_GIS_DISTANCE = 'gis_distance'
 
     def __init__(self, type: str, value):
         self.__type = type
