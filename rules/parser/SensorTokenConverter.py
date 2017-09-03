@@ -1,5 +1,6 @@
 from rules.parser.TokenConverter import TokenConverter
 from rules.parser.Token import Token
+from model.Sensor import Sensor
 from repository.SensorsRepository import SensorsRepository
 
 class SensorTokenConverter(TokenConverter):
@@ -7,7 +8,11 @@ class SensorTokenConverter(TokenConverter):
         self.__sensors_repository = sensors_repository
 
     def get_value(self, token_raw_value: str):
-        return int(self.__sensors_repository.get(token_raw_value).latest_value)
+        sensor = self.__sensors_repository.get(token_raw_value)
+        if sensor.type == Sensor.TYPE_GIS:
+            return (float(sensor.latest_value['lat']), float(sensor.latest_value['lng']))
+
+        return float(sensor.latest_value)
 
     def supports(self, token_type: str):
         if token_type == Token.TYPE_SENSOR:

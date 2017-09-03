@@ -3,6 +3,7 @@ from rules.interpretter.InterpretterContext import InterpretterContext
 from rules.parser.ParseException import ParseException
 from model.Rule import Rule
 
+
 class RuleChecker:
     def __init__(self, expression_builder: ExpressionBuilder, interpretter_context: InterpretterContext) -> None:
         self.__expression_builder = expression_builder
