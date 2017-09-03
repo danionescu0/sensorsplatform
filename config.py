@@ -1,14 +1,14 @@
-rabbitmq_host = 'localhost'
+rabbitmq_host = 'rabbitmq'
 
-mongodb_uri = 'mongodb://localhost:27017/'
+mongodb_uri = 'mongodb://mongodb:27017/'
 
 redis = {
-    'host': 'localhost',
+    'host': 'redis',
     'port': 6379
 }
 
 logging = {
-    'log_file': 'log.txt',
+    'log_file': 'log2.txt',
     'log_entries': 20000000
 }
 
