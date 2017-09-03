@@ -5,7 +5,7 @@ class Sensor():
     TYPE_TEMPERATURE = 'temperature'
     TYPE_LIGHT = 'light'
     TYPE_AIR_PRESSURE = 'air_pressure'
-    TYPE_GIS = 'gis_coordonates'
+    TYPE_GIS = 'gis'
 
     def __init__(self, id: str, type: str, latest_value: float, latest: List[float]) -> None:
         self.id = id
