@@ -1,3 +1,4 @@
+import time
 import argparse
 import pickle
 import sys
@@ -11,6 +12,7 @@ args = parser.parse_args()
 
 
 container = Container()
+time.sleep(5)
 async_jobs = container.get('async_jobs')
 task_runner = container.get('task_runner')
 

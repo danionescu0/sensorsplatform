@@ -20,9 +20,31 @@ services:
       build: .
       ports:
        - "8081:8080"
-#      volumes:
-#        - /home/ionescu/projects/python/multisensorsplatform:/root/multisensorsplatform
-#        - /var/log:/var/log
+      volumes:
+        - /home/ionescu/projects/python/multisensorsplatform:/root/multisensorsplatform
+        - /var/log:/var/log
+      depends_on:
+        - rabbitmq
+        - mongodb
+        - redis
+
+  python-store-data1:
+      build: .
+      entrypoint: python3 ./multisensorsplatform/consummer.py --task store_data
+      volumes:
+        - /home/ionescu/projects/python/multisensorsplatform:/root/multisensorsplatform
+        - /var/log:/var/log
+      depends_on:
+        - rabbitmq
+        - mongodb
+        - redis
+
+  python-rules_evaluator1:
+      build: .
+      entrypoint: python3 ./multisensorsplatform/consummer.py --task rules_evaluator
+      volumes:
+        - /home/ionescu/projects/python/multisensorsplatform:/root/multisensorsplatform
+        - /var/log:/var/log
       depends_on:
         - rabbitmq
         - mongodb
