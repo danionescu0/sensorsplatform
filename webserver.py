@@ -10,6 +10,7 @@ from model.Event import Event
 
 container = Container()
 
+time.sleep(5)
 async_jobs = container.get('async_jobs')
 async_jobs.register_event(Event.TYPE_SENSOR_RECEIVED)
 logging = container.get('logging')
