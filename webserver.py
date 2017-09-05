@@ -5,6 +5,8 @@ import tornado.ioloop
 import tornado.web
 
 from container import Container
+from web.HelloHandler import HelloHandler
+from web.AuthHandler import AuthHandler
 from web.SensorHandler import SensorHandler
 from model.Event import Event
 
@@ -14,6 +16,8 @@ time.sleep(5)
 async_jobs = container.get('async_jobs')
 async_jobs.register_event(Event.TYPE_SENSOR_RECEIVED)
 logging = container.get('logging')
+users_repo = container.get('users_repository')
+jwt_token_factory = container.get('jwt_token_factory')
 
 def make_app():
     return tornado.web.Application([
@@ -21,6 +25,8 @@ def make_app():
             r"/sensor/(\d*)", SensorHandler,
             dict(async_jobs = async_jobs, logging = logging)
         ),
+        (r"/auth", AuthHandler, dict(users_repo = users_repo, token_factory = jwt_token_factory)),
+        (r"/hello", HelloHandler)
     ])
 
 parser = argparse.ArgumentParser(description='Port')

@@ -17,6 +17,7 @@ from rules.parser.IntTokenConverter import IntTokenConverter
 from rules.parser.SensorTokenConverter import SensorTokenConverter
 from rules.parser.GisDistanceTokenConverter import GisDistanceTokenConverter
 from rules.parser.Tokenizer import Tokenizer
+from security.JwtTokenFactory import JwtTokenFactory
 from services.AsyncJobs import AsyncJobs
 from services.EmailSender import EmailSender
 from services.LoggingConfig import LoggingConfig
@@ -137,3 +138,7 @@ class Container():
         sys.excepthook = logging_config.set_error_hadler
 
         return logging_config.get_logger()
+
+    @staticmethod
+    def jwt_token_factory():
+        return JwtTokenFactory()

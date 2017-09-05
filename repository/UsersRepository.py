@@ -14,6 +14,13 @@ class UsersRepository(AbstractMongoRepository):
 
         return result[0]
 
+    def get_by_email(self, email: str) -> User:
+        result = self.__hidrate(self.get_collection().find({"email": email}))
+        if len(result) == 0:
+            return None
+
+        return result[0]
+
     def __hidrate(self, raw_data):
         return [
             User(element['id'], element['username'], element['password'], element['email'],  element['phone'],
