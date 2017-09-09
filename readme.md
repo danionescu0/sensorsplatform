@@ -12,8 +12,9 @@ python3 consummer.py --task rules_evaluator
 #Running with docker-compose
 
 ````
-cd docker-container
-docker-compose up --build
+cd project directory
+docker-compose -f docker-services.yml -f docker-python.yml up -d
+
 ````
 
 #Todo list
