@@ -17,6 +17,9 @@ class AbstractMongoRepository():
 
         return self.__collection
 
+    def find(self, query: dict):
+        return self.get_collection().find(query)
+
     def default_val(self, dictionary, key, default):
         if key in dictionary.keys():
             return dictionary[key]

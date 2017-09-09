@@ -9,6 +9,7 @@ from web.HelloHandler import HelloHandler
 from web.AuthHandler import AuthHandler
 from web.SensorHandler import SensorHandler
 from model.Event import Event
+from web.UsersHandler import UsersHandler
 
 container = Container()
 
@@ -26,6 +27,8 @@ def make_app():
             dict(async_jobs = async_jobs, logging = logging)
         ),
         (r"/auth", AuthHandler, dict(users_repo = users_repo, token_factory = jwt_token_factory)),
+        (r"/users", UsersHandler, dict(users_repo = users_repo)),
+        (r"/users/(.*)", UsersHandler, dict(users_repo = users_repo)),
         (r"/hello", HelloHandler)
     ])
 
