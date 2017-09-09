@@ -12,8 +12,16 @@ python3 consummer.py --task rules_evaluator
 #Running with docker-compose
 
 ````
-cd project directory
+cd project-directory/backend
 docker-compose -f docker-services.yml -f docker-python.yml up -d
+
+````
+#Running ui
+
+````
+cd project-directory/ui
+1. npm install
+2. npm start - start dev webserver with livereload
 
 ````
 
@@ -22,6 +30,7 @@ docker-compose -f docker-services.yml -f docker-python.yml up -d
 * add more rules components
 * add Sensor GPS data   
 * add rules that work with GPS data: distance, speed
+* ui server with docker
 
 #Bug list
 * fix timeout situations
