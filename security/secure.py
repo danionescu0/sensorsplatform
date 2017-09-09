@@ -34,6 +34,7 @@ def secure(handler_class):
         return True
 
     def missing_authorization(handler):
+        handler.set_status(401)
         handler._transforms = []
         handler.write("Missing authorization")
         handler.finish()
