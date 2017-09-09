@@ -1,4 +1,7 @@
 import time
+
+from bson.objectid import ObjectId
+
 from model.Sensor import Sensor
 from repository.AbstractMongoRepository import AbstractMongoRepository
 
@@ -10,11 +13,19 @@ class SensorsRepository(AbstractMongoRepository):
         super(SensorsRepository, self).__init__(host_uri)
 
     def get(self, id: str) -> Sensor:
-        result = self.__hidrate(self.get_collection().find({"id" : id}))
+        result = self.__hidrate(self.find({"_id" : id}))
         if len(result) == 0:
             return None
 
         return result[0]
+
+    def get_batch(self, ids: list) -> list:
+        object_ids = [ObjectId(id) for id in ids]
+
+        return self.__hidrate(self.find({"_id": {'$in': object_ids}}))
+
+    def create(self, sensor: Sensor) -> str:
+        return self.get_collection().insert_one(sensor.__dict__).inserted_id
 
     def update(self, sensor: Sensor):
         update_data = {
@@ -30,7 +41,7 @@ class SensorsRepository(AbstractMongoRepository):
                 }
             }
         }
-        self.get_collection().update_one({"id": sensor.id}, update_data, True)
+        self.get_collection().update_one({"_id": sensor.id}, update_data, True)
 
     def __hidrate(self, raw_data):
         parsed = []
@@ -39,6 +50,6 @@ class SensorsRepository(AbstractMongoRepository):
             parsed.append(data)
 
         return [
-            Sensor(element['id'], element['type'], element['latest_value'], element['latest'])
+            Sensor(str(element['_id']), element['type'], element['latest_value'], element['latest'])
             for element in parsed
         ]

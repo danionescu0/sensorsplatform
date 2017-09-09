@@ -8,7 +8,7 @@ from model.Sensor import Sensor
 from services.AsyncJobs import AsyncJobs
 
 
-class SensorHandler(tornado.web.RequestHandler):
+class SensorEventHandler(tornado.web.RequestHandler):
     def initialize(self, async_jobs: AsyncJobs, logging: RootLogger):
         self.__async_jobs = async_jobs
         self.__logging = logging

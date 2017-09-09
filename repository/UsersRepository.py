@@ -9,6 +9,14 @@ class UsersRepository(AbstractMongoRepository):
     def __init__(self, host_uri: str) -> None:
         super(UsersRepository, self).__init__(host_uri)
 
+    def add_sensor_id(self, userid: str, sensor_id: str) -> None:
+        update = {
+            "$addToSet": {
+                "sensor_ids": sensor_id,
+            }
+        }
+        self.get_collection().update_one({"_id": ObjectId(userid)}, update)
+
     def get_by_sensor_id(self, id: str) -> User:
         result = self.__hidrate(self.get_collection().find({"sensor_ids" : {"$in": [id]}}))
         if len(result) == 0:
