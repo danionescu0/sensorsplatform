@@ -1,2 +1,0 @@
-{ "_id" : { "$oid" : "59949d9df1bfad450757cd5f" }, "userid" : "1", "rule_text" : "and  (gt(S[2], 48), lt(TIME, 20:10) )", "triggers" : [ "email", "sms" ], "trigger_min_interval" : 30.0 }
-{ "_id" : { "$oid" : "599523d12cda0aadbce84378" }, "userid" : "1", "rule_text" : "gt(TIME, 20:10) ", "triggers" : [ "voice", "sms" ] }
