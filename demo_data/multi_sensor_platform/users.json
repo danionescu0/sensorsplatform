@@ -1,1 +1,1 @@
-{ "_id" : { "$oid" : "599868bb677e0457a9137039" }, "id" : "1", "username" : "danionescu", "password" : "testpass", "email" : "test@test.com", "phone" : "0726775455", "sensors_ids" : [ "1", "2", "5" ] }
+{ "_id" : { "$oid" : "599868bb677e0457a9137039" }, "id" : "1", "username" : "danionescu", "password" : "testpass", "email" : "test@test.com", "phone" : "0726775455", "sensor_ids" : [ "1", "2", "5" ] }
