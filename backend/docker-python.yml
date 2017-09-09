@@ -6,7 +6,7 @@ services:
       ports:
        - "8081:8080"
       volumes:
-        - /home/ionescu/projects/python/multisensorsplatform:/root/multisensorsplatform
+        - /home/cosmin/workspace/python/multisensorsplatform/backend:/root/multisensorsplatform
         - /var/log:/var/log
       depends_on:
         - rabbitmq
@@ -17,7 +17,7 @@ services:
       build: .
       entrypoint: python3 ./multisensorsplatform/consummer.py --task store_data
       volumes:
-        - /home/ionescu/projects/python/multisensorsplatform:/root/multisensorsplatform
+        - /home/cosmin/workspace/python/multisensorsplatform/backend:/root/multisensorsplatform
         - /var/log:/var/log
       depends_on:
         - rabbitmq
@@ -28,7 +28,7 @@ services:
       build: .
       entrypoint: python3 ./multisensorsplatform/consummer.py --task rules_evaluator
       volumes:
-        - /home/ionescu/projects/python/multisensorsplatform:/root/multisensorsplatform
+        - /home/cosmin/workspace/python/multisensorsplatform/backend:/root/multisensorsplatform
         - /var/log:/var/log
       depends_on:
         - rabbitmq
