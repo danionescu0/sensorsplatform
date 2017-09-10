@@ -35,7 +35,7 @@ class ExpressionBuilder:
         self.__next_token()
         if token_type in [Token.TYPE_LITERAL_BOOLEAN, Token.TYPE_LITERAL_INT, Token.TYPE_LITERAL_TIME,
                           Token.TYPE_ACTUATOR_STATE, Token.TYPE_CURRENT_TIME, Token.TYPE_SENSOR,
-                          Token.TYPE_AVERAGE_NUMERICAL_SENSOR, Token.TYPE_GIS_DISTANCE]:
+                          Token.TYPE_AVERAGE_NUMERICAL_SENSOR, Token.TYPE_GIS_DISTANCE, Token.TYPE_SPEED]:
             return LiteralExpression(token.get_value())
 
         left_expr = self.__evaluate()

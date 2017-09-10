@@ -1,5 +1,4 @@
 from logging import RootLogger
-import json
 
 from repository.SensorsRepository import SensorsRepository
 from model.Event import Event
@@ -26,7 +25,7 @@ class StoreData(BaseTask):
         self.__sensors_repository.update(event.model)
         sensor_persisted_event = Event(Event.TYPE_SENSOR_PERSISTED, event.model)
         self.__get_configured_async_jobs().publish(sensor_persisted_event)
-        self.__logging.debug("Event persisted with id: {0} and value {1}".format(event.model.id, event.model.latest_value))
+        self.__logging.info("Event persisted with id: {0} and value {1}".format(event.model.id, event.model.latest_value))
 
     def get_name(self):
         return 'store_data'

@@ -23,11 +23,11 @@ class SendEmailAlertListener:
         if Rule.TRIGGER_EMAIL not in rule.triggers:
             return
         if self.__timed_lock.has_lock(rule, self.CONTEXT):
-            self.__logging.debug("Skipping email sending, lock found for rule: {0}".format(rule.rule_text))
+            self.__logging.info("Skipping email sending, lock found for rule: {0}".format(rule.rule_text))
 
             return False
 
         body = "An alert has been raised for rule: {0}".format(rule.rule_text)
-        self.__logging.debug(body)
+        self.__logging.info(body)
         self.__email_sender.send("Email alert", body)
         self.__timed_lock.set_lock(rule, self.CONTEXT)

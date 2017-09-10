@@ -3,6 +3,7 @@ from bson.objectid import ObjectId
 from model.User import User
 from repository.AbstractMongoRepository import AbstractMongoRepository
 
+
 class UsersRepository(AbstractMongoRepository):
     COLLECTION_NAME = 'users'
 

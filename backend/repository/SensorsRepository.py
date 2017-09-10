@@ -5,6 +5,7 @@ from bson.objectid import ObjectId
 from model.Sensor import Sensor
 from repository.AbstractMongoRepository import AbstractMongoRepository
 
+
 class SensorsRepository(AbstractMongoRepository):
     COLLECTION_NAME = 'sensors'
     VALUES_TO_KEEP = 10
@@ -13,7 +14,7 @@ class SensorsRepository(AbstractMongoRepository):
         super(SensorsRepository, self).__init__(host_uri)
 
     def get(self, id: str) -> Sensor:
-        result = self.__hidrate(self.find({"_id" : id}))
+        result = self.__hidrate(self.find({"_id" : ObjectId(id)}))
         if len(result) == 0:
             return None
 
@@ -41,7 +42,7 @@ class SensorsRepository(AbstractMongoRepository):
                 }
             }
         }
-        self.get_collection().update_one({"_id": sensor.id}, update_data, True)
+        self.get_collection().update_one({"_id": ObjectId(sensor.id)}, update_data, True)
 
     def __hidrate(self, raw_data):
         parsed = []

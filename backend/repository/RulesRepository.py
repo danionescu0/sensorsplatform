@@ -1,6 +1,7 @@
 from repository.AbstractMongoRepository import AbstractMongoRepository
 from model.Rule import Rule
 
+
 class RulesRepository(AbstractMongoRepository):
     COLLECTION_NAME = 'rules'
 
