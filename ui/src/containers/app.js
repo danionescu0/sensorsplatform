@@ -5,18 +5,21 @@ import {
     Switch,
 } from 'react-router-dom'
 
-import Admin from './admin';
-import Login from './login';
-import Register from './register';
-import ForgotPassword from './forgot-password';
+import Admin from '../components/admin';
+import LoginPage from './login-page';
+import Register from '../components/register';
+import ForgotPassword from '../components/forgot-password';
+import secure from '../hoc/secure';
+
 
 class App extends Component {
   render() {
     return (
         <Router>
           <Switch>
-            <Route exact path="/" component={Admin}/>
-            <Route exact path="/login" component={Login}/>
+            <Route exact path="/admin" component={secure(Admin)}/>
+            <Route exact path="/" component={secure(Admin)}/>
+            <Route exact path="/login" component={LoginPage}/>
             <Route exact path="/register" component={Register}/>
             <Route exact path="/forgot-password" component={ForgotPassword}/>
           </Switch>

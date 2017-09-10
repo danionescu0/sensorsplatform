@@ -5,11 +5,11 @@ import {
     NavLink,
 } from 'ahoy-reactstrap';
 
-const Header = () => {
+const Header = ({logout}) => {
     return (
         <Nav navbar className="ml-auto">
             <NavItem>
-                <NavLink href="/logout"> <i className="fa fa-fw fa-sign-out"/> Logout </NavLink>
+                <NavLink href="/" onClick={logout}> <i className="fa fa-fw fa-sign-out"/> Logout </NavLink>
             </NavItem>
         </Nav>
     )

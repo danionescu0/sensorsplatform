@@ -10,14 +10,14 @@ import {
 import Sidebar from './navigation/sidebar';
 import Header from './navigation/header';
 
-const Navigation = ({isOpen, toogleNavbar}) => {
+const Navigation = ({isOpen, toogleNavbar, logout}) => {
     return (
         <Navbar id="mainNav" className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <NavbarBrand className="navbar-brand-title">Multi Sensors Platform</NavbarBrand>
             <NavbarToggler onClick={toogleNavbar}/>
             <Collapse navbar isOpen={isOpen}>
                 <Sidebar/>
-                <Header/>
+                <Header logout={logout}/>
             </Collapse>
         </Navbar>
     )
