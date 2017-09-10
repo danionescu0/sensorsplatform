@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-
+import {withRouter} from 'react-router-dom';
 
 import Navigation from '../components/navigation';
+import Auth from "../utils/auth";
 
-
-export default class NavigationContainer extends Component {
+class NavigationContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,9 +18,21 @@ export default class NavigationContainer extends Component {
         });
     }
 
+    logout(e) {
+        e.preventDefault();
+        const {history} = this.props;
+        Auth.deAuthenticateUser();
+        history.push("/login");
+    }
+
     render() {
         return (
-            <Navigation isOpen={this.state.isOpen} toogleNavbar={this.toggleNavbar.bind(this)}/>
+            <Navigation isOpen={this.state.isOpen}
+                        toogleNavbar={this.toggleNavbar.bind(this)}
+                        logout={this.logout.bind(this)}
+            />
         )
     }
 }
+
+export default withRouter(NavigationContainer);

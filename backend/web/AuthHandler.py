@@ -1,9 +1,9 @@
-import tornado.web
-
 from repository.UsersRepository import UsersRepository
 from security.JwtTokenFactory import JwtTokenFactory
+from web.CorsHandler import CorsHandler
 
-class AuthHandler(tornado.web.RequestHandler):
+
+class AuthHandler(CorsHandler):
 
     def initialize(self, users_repo: UsersRepository, token_factory: JwtTokenFactory):
         self.__users_repo = users_repo

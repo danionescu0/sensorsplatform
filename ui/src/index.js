@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/app';
+import 'whatwg-fetch';
+import App from './containers/app';
+
 
 import './css/index.css';
 
