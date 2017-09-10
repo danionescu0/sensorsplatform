@@ -21,10 +21,10 @@ class LoggingConfig():
             logging.StreamHandler()
         ]
         self.__root_logger = logging.getLogger()
-        self.__root_logger.setLevel(logging.DEBUG)
+        self.__root_logger.setLevel(logging.INFO)
         for h in handlers:
             h.setFormatter(formatter)
-            h.setLevel(logging.DEBUG)
+            h.setLevel(logging.INFO)
             self.__root_logger.addHandler(h)
 
         return self.__root_logger

@@ -13,7 +13,7 @@ class AverageSensorTokenConverter(TokenConverter):
         values_to_count = token_raw_value[1]
         latest_values = self.__sensors_repository.get(sensor_id).latest
         if len(latest_values) < int(values_to_count):
-            return 0 # hack. throw an error or smth
+            return 0 # hack. throw an error
 
         return statistics.mean(latest_values[int(values_to_count):])
 

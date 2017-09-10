@@ -1,10 +1,10 @@
 import re
 from typing import List
-import json
 
 from rules.parser.Token import Token
 from rules.parser.ParseException import ParseException
 from rules.parser.TokenConverter import TokenConverter
+
 
 class Tokenizer:
     token_converters = []
@@ -13,9 +13,14 @@ class Tokenizer:
         self.__logging = logging
 
     __token_rules = [
+        # S[id]
         ('S\[(\w+)\]', Token.TYPE_SENSOR),
-        ('S_AVG\[(\d+)\:(\d+)]', Token.TYPE_AVERAGE_NUMERICAL_SENSOR),
-        ('GIS_DST\[([0-9]{1,5}\:[0-9.]{1,10}\:[0-9.]{1,10})\]', Token.TYPE_GIS_DISTANCE),
+        # S_AVG[id, last positions] don't know if this works
+        ('S_AVG\[(\w+)\:(\d+)]', Token.TYPE_AVERAGE_NUMERICAL_SENSOR),
+        # SPEED[id]
+        ('SPEED\[(\w+)\]', Token.TYPE_SPEED),
+        # GIS_DST[id, gis_lng, gis_lat]
+        ('GIS_DST\[(\w+\:[0-9.]{1,10}\:[0-9.]{1,10})\]', Token.TYPE_GIS_DISTANCE),
         ('TIME', Token.TYPE_CURRENT_TIME),
         ('gt', Token.TYPE_EXPR_GREATER),
         ('lt', Token.TYPE_EXPR_LESS),
@@ -24,6 +29,7 @@ class Tokenizer:
         ('and', Token.TYPE_BOOLEAN_AND),
         ('or', Token.TYPE_BOOLEAN_OR),
         ('True|False', Token.TYPE_LITERAL_BOOLEAN),
+        # HH:mm
         ('[0-9]{1,2}\:[0-9]{1,2}', Token.TYPE_LITERAL_TIME),
         ('\d+', Token.TYPE_LITERAL_INT),
     ]
@@ -48,10 +54,13 @@ class Tokenizer:
         raise ParseException('Cannot parse token symbol: {0}'.format(token_text))
 
     def __get_token_value(self, token_type: str, token_raw_value: str):
+        print("({0}..{1}".format(token_type, token_raw_value))
         token_converter = [converter for converter in self.token_converters if converter.supports(token_type)]
+        print(token_converter)
         if 1 != len(token_converter):
             return token_raw_value
         token_converter = token_converter[0]
+        print(token_converter)
         value = token_converter.get_value(token_raw_value)
 
         return value

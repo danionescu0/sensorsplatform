@@ -25,7 +25,7 @@ jwt_token_factory = container.get('jwt_token_factory')
 def make_app():
     return tornado.web.Application([
         (
-            r"/sensor/(\d*)", SensorEventHandler,
+            r"/sensor/(\w*)", SensorEventHandler,
             dict(async_jobs = async_jobs, logging = logging)
         ),
         (r"/auth", AuthHandler, dict(users_repo = users_repo, token_factory = jwt_token_factory)),

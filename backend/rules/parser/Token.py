@@ -13,6 +13,7 @@ class Token:
     TYPE_SENSOR = 'sensor'
     TYPE_AVERAGE_NUMERICAL_SENSOR = 'average_numerical_sensor'
     TYPE_GIS_DISTANCE = 'gis_distance'
+    TYPE_SPEED = 'speed'
 
     def __init__(self, type: str, value):
         self.__type = type

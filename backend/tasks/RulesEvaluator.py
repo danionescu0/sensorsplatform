@@ -29,13 +29,13 @@ class RulesEvaluator(BaseTask):
         if None == user:
             return
         rules = self.__rules_repository.get_for_user(user.userid)
-        if None == rules:
+        if 0 == len(rules):
             return
         for rule in rules:
-            self.__logging.debug("Checking rule: {0}".format(rule.rule_text))
+            self.__logging.info("Checking rule: {0}".format(rule.rule_text))
             if self.__rule_checker.is_valid(rule):
                 self.__valid_rule_event.send(rule)
-                self.__logging.debug("Rule is valid")
+                self.__logging.info("Rule is valid")
 
     def get_name(self):
         return 'rules_evaluator'
