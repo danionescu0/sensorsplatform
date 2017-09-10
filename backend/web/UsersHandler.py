@@ -25,7 +25,7 @@ class UsersHandler(tornado.web.RequestHandler):
 
     def post(self):
         data = json.loads(self.request.body.decode("utf-8"))
-        user = User(data['username'], data['password'], data['email'], data['phone'], [])
+        user = User(data['first_name'], data['last_name'], data['password'], data['email'], data['phone'], [])
 
         self.__users_repo.create(user)
         self.set_status(201)
