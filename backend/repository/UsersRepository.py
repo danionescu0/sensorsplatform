@@ -44,7 +44,7 @@ class UsersRepository(AbstractMongoRepository):
     def __hidrate(self, raw_data):
         users = []
         for element in raw_data:
-            user = User(element['username'], element['password'], element['email'], element['phone'],
+            user = User(element['first_name'], element['last_name'], element['password'], element['email'], element['phone'],
                  element['sensor_ids'])
             user.set_userid(str(element['_id']))
             users.append(user)
