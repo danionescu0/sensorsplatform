@@ -4,6 +4,7 @@ from model.Sensor import Sensor
 from repository.SensorsRepository import SensorsRepository
 from rules.parser.ParseException import ParseException
 
+
 class SensorTokenConverter(TokenConverter):
     def __init__(self, sensors_repository: SensorsRepository) -> None:
         self.__sensors_repository = sensors_repository
@@ -17,8 +18,5 @@ class SensorTokenConverter(TokenConverter):
 
         return float(sensor.latest_value)
 
-    def supports(self, token_type: str):
-        if token_type == Token.TYPE_SENSOR:
-            return True
-
-        return False
+    def get_supported_token(self) -> str:
+        return Token.TYPE_SENSOR

@@ -4,6 +4,7 @@ from dateutil import tz
 from rules.parser.TokenConverter import TokenConverter
 from rules.parser.Token import Token
 
+
 class CurrentTimeTokenConverter(TokenConverter):
     def get_value(self, token_raw_value: str):
         from_zone = tz.gettz('UTC')
@@ -13,8 +14,5 @@ class CurrentTimeTokenConverter(TokenConverter):
 
         return local_date.strftime('%H:%M')
 
-    def supports(self, token_type: str):
-        if token_type == Token.TYPE_CURRENT_TIME:
-            return True
-
-        return False
+    def get_supported_token(self) -> str:
+        return Token.TYPE_CURRENT_TIME

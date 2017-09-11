@@ -21,8 +21,5 @@ class GisDistanceTokenConverter(TokenConverter):
 
         return vincenty(current_coordonates, rule_coordonates).km
 
-    def supports(self, token_type: str):
-        if token_type == Token.TYPE_GIS_DISTANCE:
-            return True
-
-        return False
+    def get_supported_token(self) -> str:
+        return Token.TYPE_GIS_DISTANCE

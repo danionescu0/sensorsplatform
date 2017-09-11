@@ -27,8 +27,5 @@ class SpeedTokenConverter(TokenConverter):
 
         return round(distance / (time_difference/3600), 2)
 
-    def supports(self, token_type: str):
-        if token_type == Token.TYPE_SPEED:
-            return True
-
-        return False
+    def get_supported_token(self) -> str:
+        return Token.TYPE_SPEED
