@@ -54,13 +54,10 @@ class Tokenizer:
         raise ParseException('Cannot parse token symbol: {0}'.format(token_text))
 
     def __get_token_value(self, token_type: str, token_raw_value: str):
-        print("({0}..{1}".format(token_type, token_raw_value))
-        token_converter = [converter for converter in self.token_converters if converter.supports(token_type)]
-        print(token_converter)
+        token_converter = [converter for converter in self.token_converters if converter.get_supported_token() == token_type]
         if 1 != len(token_converter):
             return token_raw_value
         token_converter = token_converter[0]
-        print(token_converter)
         value = token_converter.get_value(token_raw_value)
 
         return value

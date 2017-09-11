@@ -19,8 +19,5 @@ class AverageSensorTokenConverter(TokenConverter):
 
         return statistics.mean(latest_values[int(values_to_count):])
 
-    def supports(self, token_type: str):
-        if token_type == Token.TYPE_AVERAGE_NUMERICAL_SENSOR:
-            return True
-
-        return False
+    def get_supported_token(self) -> str:
+        return Token.TYPE_AVERAGE_NUMERICAL_SENSOR
