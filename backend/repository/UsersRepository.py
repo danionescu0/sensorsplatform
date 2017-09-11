@@ -40,14 +40,14 @@ class UsersRepository(AbstractMongoRepository):
         return result[0]
 
     def create(self, user: User) -> None:
-        self.get_collection().insert_one(user.__dict__)
+        self.get_collection().insert_one(user.to_mongo_doc())
 
     def __hidrate(self, raw_data):
         users = []
         for element in raw_data:
             user = User(element['first_name'], element['last_name'], element['password'], element['email'], element['phone'],
                  element['sensor_ids'])
-            user.set_userid(str(element['_id']))
+            user.userid = str(element['_id'])
             users.append(user)
 
         return users
