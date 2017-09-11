@@ -1,4 +1,5 @@
 import time
+from typing import List
 
 from bson.objectid import ObjectId
 
@@ -20,7 +21,7 @@ class SensorsRepository(AbstractMongoRepository):
 
         return result[0]
 
-    def get_batch(self, ids: list) -> list:
+    def get_batch(self, ids: list) -> List[Sensor]:
         object_ids = [ObjectId(id) for id in ids]
 
         return self.__hidrate(self.find({"_id": {'$in': object_ids}}))
@@ -47,7 +48,7 @@ class SensorsRepository(AbstractMongoRepository):
     def __hidrate(self, raw_data):
         parsed = []
         for data in raw_data:
-            data['latest'] = [latest['value'] for latest in data['latest']]
+            data['latest'] = [(latest['timestamp'], latest['value']) for latest in data['latest']]
             parsed.append(data)
 
         return [
