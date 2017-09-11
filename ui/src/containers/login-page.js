@@ -3,8 +3,7 @@ import {withRouter} from 'react-router-dom';
 
 import Login from '../components/login';
 import withForm from '../hoc/form';
-import {doFetch} from "../utils/fetch";
-import Auth from "../utils/auth";
+import {performLogin} from "../utils/login";
 
 class LoginPage extends Component {
     constructor(props) {
@@ -15,29 +14,15 @@ class LoginPage extends Component {
     }
 
     handleSubmit(e) {
-        const {form} = this.props;
-        const params = new URLSearchParams();
-        params.set("email", form.email);
-        params.set("password", form.password);
-        this.doLogin(params);
-        e.preventDefault();
-    }
-
-    doLogin(params) {
-        const {history} = this.props;
-
-        doFetch('/auth', {
-            body: params,
-            method: 'POST'
-        }).then(response => response.text())
-        .then(token => {
-            this.setState({failedLogin: false});
-            Auth.authenticateUser(token);
+        const {form, history} = this.props;
+        const successLoginHandler = () => {
             history.push('/');
-        }).catch(e => {
-            console.log(e);
-            this.setState({failedLogin: true});
-        });
+            this.setState({failedLogin: true})
+        };
+        const failedLoginHandler = () => this.setState({failedLogin: true});
+
+        performLogin(form.email, form.password).then(successLoginHandler.bind(this), failedLoginHandler.bind(this));
+        e.preventDefault();
     }
 
     render() {
