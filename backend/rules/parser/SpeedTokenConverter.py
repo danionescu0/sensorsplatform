@@ -20,11 +20,12 @@ class SpeedTokenConverter(TokenConverter):
         latest = sensor.latest
         if len(latest) < 2:
             return 0
-        last = (float(latest[-1]['lat']), float(latest[-1]['lng']))
-        one_before_last = (float(latest[-2]['lat']), float(latest[-2]['lng']))
+        last = (float(latest[-1][1]['lat']), float(latest[-1][1]['lng']))
+        one_before_last = (float(latest[-2][1]['lat']), float(latest[-2][1]['lng']))
+        time_difference = latest[-1][0] - latest[-2][0]
         distance = vincenty(one_before_last, last).km
 
-        return 0
+        return round(distance / (time_difference/3600), 2)
 
     def supports(self, token_type: str):
         if token_type == Token.TYPE_SPEED:

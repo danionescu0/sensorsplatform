@@ -5,12 +5,14 @@ import sys
 
 from container import Container
 
+
 parser = argparse.ArgumentParser(description='Tasks')
 parser.add_argument('--task', dest='task', type=str)
 parser.add_argument('--list', dest='list', action='store_true', default=False)
 args = parser.parse_args()
 
 container = Container()
+
 time.sleep(5)
 async_jobs = container.get('async_jobs')
 task_runner = container.get('task_runner')

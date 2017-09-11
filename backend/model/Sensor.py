@@ -1,4 +1,5 @@
 from typing import List
+from typing import Tuple
 
 class Sensor():
     TYPE_HUMIDITY = 'humidity'
@@ -7,7 +8,7 @@ class Sensor():
     TYPE_AIR_PRESSURE = 'air_pressure'
     TYPE_GIS = 'gis'
 
-    def __init__(self, id: str, type: str, latest_value: float, latest: List[float]) -> None:
+    def __init__(self, id: str, type: str, latest_value: float, latest: List[Tuple]) -> None:
         self.id = id
         self.type = type
         self.latest_value = latest_value
