@@ -1,27 +1,26 @@
 import json
 
-import tornado
-
 from model.User import User
 from repository.UsersRepository import UsersRepository
 from security.secure import secure
+from web.CorsHandler import CorsHandler
 
 
-@secure
-class UsersHandler(tornado.web.RequestHandler):
+class UsersHandler(CorsHandler):
 
     def initialize(self, users_repo: UsersRepository):
         self.__users_repo = users_repo
 
+    @secure
     def get(self, userId):
         user = self.__users_repo.get_by_id(userId)
-        if user == None:
+        if not user:
             self.set_status(404)
             return
-        userDict = user.__dict__
-        userDict.pop('password')
+        user_dict = user.__dict__
+        user_dict.pop('password')
 
-        self.write(json.dumps(userDict))
+        self.write(json.dumps(user_dict))
 
     def post(self):
         data = json.loads(self.request.body.decode("utf-8"))

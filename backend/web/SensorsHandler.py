@@ -8,12 +8,12 @@ from repository.UsersRepository import UsersRepository
 from security.secure import secure
 
 
-@secure
 class SensorsHandler(tornado.web.RequestHandler):
     def initialize(self, sensors_repo: SensorsRepository, users_repo: UsersRepository):
         self.__sensors_repo = sensors_repo
         self.__users_repo = users_repo
 
+    @secure
     def get(self, userId):
         user = self.__users_repo.get_by_id(userId)
         if not user:
@@ -23,6 +23,7 @@ class SensorsHandler(tornado.web.RequestHandler):
         sensors = [sensor.__dict__ for sensor in self.__sensors_repo.get_batch(user.sensor_ids)]
         self.write(json.dumps(sensors))
 
+    @secure
     def post(self, userId):
         data = json.loads(self.request.body.decode("utf-8"))
         sensor = Sensor(None, data['type'], 0, [])
