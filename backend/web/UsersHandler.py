@@ -17,10 +17,8 @@ class UsersHandler(CorsHandler):
         if not user:
             self.set_status(404)
             return
-        user_dict = user.__dict__
-        user_dict.pop('password')
 
-        self.write(json.dumps(user_dict))
+        self.write(json.dumps(user.get_object_dict_without_key("password")))
 
     def post(self):
         data = json.loads(self.request.body.decode("utf-8"))
