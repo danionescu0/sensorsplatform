@@ -6,6 +6,3 @@ from web.CorsHandler import CorsHandler
 class HelloHandler(CorsHandler):
     def get(self):
         self.write("Hello, world")
-
-    def options(self):
-        print('aaaaa')
