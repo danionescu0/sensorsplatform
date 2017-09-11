@@ -1,9 +1,14 @@
-export const get = (path) => {
+import Auth from "../utils/auth";
+
+export const postJson = (path, body) => {
     return doFetch(path, {
-        method: 'GET'
-    })
-    .then(response => response.json)
-    .catch(error => console.log('request failed', error));
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `bearer ${Auth.getToken()}`
+        },
+        body: JSON.stringify(body)
+    }).then(response => response.json);
 };
 
 export const doFetch = (path, request) => {
