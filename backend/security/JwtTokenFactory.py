@@ -1,10 +1,13 @@
-import jwt
 from datetime import datetime
 from datetime import timedelta
 
+import jwt
+
 
 class JwtTokenFactory:
-    SECRET = 'n1cusord3labraila'
+
+    def __init__(self, jwt_secret: str) -> None:
+        self.__jwt_secret = jwt_secret
 
     def create(self, userid: str) -> str:
         payload = {
@@ -12,4 +15,4 @@ class JwtTokenFactory:
             'exp': datetime.utcnow() + timedelta(days=1)
         }
 
-        return jwt.encode(payload, self.SECRET, algorithm='HS256')
+        return jwt.encode(payload, self.__jwt_secret, algorithm='HS256')

@@ -147,4 +147,4 @@ class Container():
 
     @staticmethod
     def jwt_token_factory():
-        return JwtTokenFactory()
+        return JwtTokenFactory(config.web['jwt_secret'])

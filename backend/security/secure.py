@@ -1,6 +1,6 @@
 import jwt
 
-from security.JwtTokenFactory import JwtTokenFactory
+import config
 
 
 def secure(method):
@@ -15,10 +15,11 @@ def secure(method):
             return invalid_auth(self, "Invalid authorization header")
         token = auth_header[1]
         try:
-            jwt.decode(token, JwtTokenFactory.SECRET)
-            return method(self, *args, **kwargs)
+            jwt.decode(token, config.web['jwt_secret'])
         except Exception:
             invalid_auth(self, "Invalid token")
+
+        return method(self, *args, **kwargs)
 
     def invalid_auth(self, message):
         self.set_status(401)
