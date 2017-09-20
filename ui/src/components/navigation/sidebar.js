@@ -9,7 +9,7 @@ const Sidebar = () => {
         <Nav navbar className="navbar-sidenav">
             <SidebarItem title="Dashboard" icon="fa-dashboard"/>
             <SidebarItem title="Sensors" icon="fa fa-thermometer-full" href="/sensors"/>
-            <SidebarItem title="Tables" icon="fa-table"/>
+            <SidebarItem title="Rules" icon="fa fa-exclamation-triangle" href="/rules"/>
         </Nav>
     );
 };
