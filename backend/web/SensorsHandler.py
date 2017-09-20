@@ -1,14 +1,13 @@
 import json
 
-import tornado.web
-
 from model.Sensor import Sensor
 from repository.SensorsRepository import SensorsRepository
 from repository.UsersRepository import UsersRepository
 from security.secure import secure
+from web.CorsHandler import CorsHandler
 
 
-class SensorsHandler(tornado.web.RequestHandler):
+class SensorsHandler(CorsHandler):
     def initialize(self, sensors_repo: SensorsRepository, users_repo: UsersRepository):
         self.__sensors_repo = sensors_repo
         self.__users_repo = users_repo

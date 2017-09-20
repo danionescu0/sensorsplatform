@@ -23,7 +23,7 @@ const withForm = WrapperComponent => class extends Component {
 
     render() {
         return (
-            <WrapperComponent form={this.state.form} handleInputChange={this.handleInputChange.bind(this)}/>
+            <WrapperComponent {...this.props} form={this.state.form} handleInputChange={this.handleInputChange.bind(this)}/>
         )
     }
 };

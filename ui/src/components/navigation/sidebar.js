@@ -8,7 +8,7 @@ const Sidebar = () => {
     return (
         <Nav navbar className="navbar-sidenav">
             <SidebarItem title="Dashboard" icon="fa-dashboard"/>
-            <SidebarItem title="Charts" icon="fa-area-chart"/>
+            <SidebarItem title="Sensors" icon="fa fa-thermometer-full" href="/sensors"/>
             <SidebarItem title="Tables" icon="fa-table"/>
         </Nav>
     );

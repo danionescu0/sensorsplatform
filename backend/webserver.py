@@ -28,10 +28,10 @@ def make_app():
             r"/sensor/(\w*)", SensorEventHandler,
             dict(async_jobs = async_jobs, logging = logging)
         ),
-        (r"/auth", AuthHandler, dict(users_repo = users_repo, token_factory = jwt_token_factory)),
-        (r"/user-sensors/(.*)", SensorsHandler, dict(sensors_repo=sensors_repo, users_repo = users_repo)),
-        (r"/users", UsersHandler, dict(users_repo = users_repo)),
-        (r"/users/(.*)", UsersHandler, dict(users_repo = users_repo)),
+        (r"/auth", AuthHandler, dict(users_repo=users_repo, token_factory=jwt_token_factory)),
+        (r"/user-sensors/(.*)", SensorsHandler, dict(sensors_repo=sensors_repo, users_repo=users_repo)),
+        (r"/users", UsersHandler, dict(users_repo=users_repo)),
+        (r"/users/(.*)", UsersHandler, dict(users_repo=users_repo)),
         (r"/hello", HelloHandler)
     ])
 

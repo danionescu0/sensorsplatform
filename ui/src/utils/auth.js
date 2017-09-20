@@ -18,8 +18,8 @@ class Auth {
         return jwt.decode(token).exp > Math.floor(Date.now() / 1000);
     }
 
-    static getUserId(token) {
-        return jwt.decode(token).userid;
+    static getUserId() {
+        return jwt.decode(Auth.getToken()).userid;
     }
 
     static deAuthenticateUser() {

@@ -7,6 +7,6 @@ class CorsHandler(tornado.web.RequestHandler):
         self.set_header("Access-Control-Allow-Headers", "x-requested-with, content-type, authorization")
         self.set_header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE')
 
-    def options(self):
+    def options(self, *args, **kwargs):
         self.set_status(204)
         self.finish()
