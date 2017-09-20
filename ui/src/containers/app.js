@@ -11,6 +11,7 @@ import RegisterPage from './register-page';
 import ForgotPassword from '../components/forgot-password';
 import SensorsListPage from './sensors-list-page';
 import SensorPage from './sensor-page';
+import RulesPage from './rules-page';
 import secure from '../hoc/secure';
 
 
@@ -21,6 +22,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/admin" component={secure(Admin)}/>
             <Route exact path="/" component={secure(Admin)}/>
+            <Route exact path="/rules" component={secure(RulesPage)}/>
             <Route exact path="/sensors" component={secure(SensorsListPage)}/>
             <Route path="/sensors/:id" component={secure(SensorPage)}/>
             <Route exact path="/login" component={LoginPage}/>
