@@ -14,7 +14,7 @@ import {
 
 import {SENSOR_TYPES} from './sensors-form';
 
-const SensorsList = ({toogleModal, sensors}) => {
+const SensorsList = ({sensors}) => {
     return (
         <div>
             <Row>
@@ -41,9 +41,11 @@ const SensorsList = ({toogleModal, sensors}) => {
                             </Table>
                         </CardBody>
                         <CardFooter>
-                            <Button color="primary" onClick={toogleModal}>
-                                <i className="fa fa-plus" aria-hidden="true"/> &nbsp; Add Sensor
-                            </Button>
+                            <Link to="/sensors/add" >
+                                <Button color="success">
+                                    <i className="fa fa-plus" aria-hidden="true"/> &nbsp; Add Sensor
+                                </Button>
+                            </Link>
                         </CardFooter>
                     </Card>
                 </Col>

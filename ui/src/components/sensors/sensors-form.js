@@ -4,12 +4,15 @@ import {
     Label,
     FormGroup,
     Button,
-    Modal,
-    ModalBody,
-    ModalHeader,
-    ModalFooter,
-    Alert
+    Alert,
+    Card,
+    CardFooter,
+    CardHeader,
+    CardBody,
+    Col
 } from 'ahoy-reactstrap';
+
+import MapWithMarkers from '../map-with-markers';
 
 export const SENSOR_TYPES = {
     temperature: 'Temperature',
@@ -20,27 +23,36 @@ export const SENSOR_TYPES = {
 };
 
 
-const SensorsForm = ({handleInputChange, handleSubmit, isModalOpen, toogleModal, error}) => {
+const SensorsForm = ({handleInputChange, handleSubmit, error, onLocationChanged, location}) => {
+    const marker = {
+        position: { lat: location.lat || 44.425908, lng: location.lng || 26.1236888 },
+        draggable: true,
+        onDragEnd: onLocationChanged
+    };
+
     return (
-        <Modal isOpen={isModalOpen} toggle={toogleModal}>
-            <ModalHeader toggle={this.toggle}>Add sensor</ModalHeader>
-            <ModalBody>
-                <form onSubmit={handleSubmit}>
-                    <FormGroup>
-                        <Label for="exampleSelect">Select</Label>
-                        <Input required type="select" name="type" onChange={handleInputChange}>
-                            <option/>
-                            {renderOptions()}
-                        </Input>
-                    </FormGroup>
-                </form>
-                {error && <Alert color="danger">{error}</Alert>}
-            </ModalBody>
-            <ModalFooter>
-                <Button color="primary" type="submit" onClick={handleSubmit}>Save</Button>{' '}
-                <Button color="secondary" onClick={toogleModal}>Cancel</Button>
-            </ModalFooter>
-        </Modal>
+        <Col lg="12">
+            <Card className="mb-5">
+                <CardHeader>Add sensor</CardHeader>
+                <CardBody>
+                    <form onSubmit={handleSubmit} className="mb-5">
+                        <FormGroup>
+                            <Label for="exampleSelect">Select sensor type</Label>
+                            <Input required type="select" name="type" onChange={handleInputChange}>
+                                <option/>
+                                {renderOptions()}
+                            </Input>
+                        </FormGroup>
+                    </form>
+                    <MapWithMarkers markers={[marker]}/>
+                    {error && <Alert color="danger">{error}</Alert>}
+                </CardBody>
+                <CardFooter>
+                    <Button color="primary" type="submit" onClick={handleSubmit}>Save</Button>{' '}
+                </CardFooter>
+            </Card>
+        </Col>
+
     )
 };
 

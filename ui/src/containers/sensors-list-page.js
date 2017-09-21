@@ -4,7 +4,6 @@ import {getJson} from '../utils/fetch';
 import Auth from "../utils/auth";
 import AdminContent from '../components/admin-content';
 import SensorsList from '../components/sensors/sensors-list';
-import SensorsFormContainer from './sensors-form-container';
 
 class SensorsListPage extends Component {
     constructor(props) {
@@ -12,14 +11,7 @@ class SensorsListPage extends Component {
         this.state = {
             errorMessage: null,
             sensors: [],
-            isModalOpen: false
         }
-    }
-
-    toogleModal() {
-        this.setState({
-            isModalOpen: !this.state.isModalOpen
-        });
     }
 
     componentDidMount() {
@@ -32,21 +24,10 @@ class SensorsListPage extends Component {
         });
     }
 
-    onAddSuccess() {
-        this.setState({
-            isModalOpen: false
-        });
-    }
-
     render() {
         return (
             <AdminContent>
-                <SensorsFormContainer
-                    toogleModal={this.toogleModal.bind(this)}
-                    isModalOpen={this.state.isModalOpen}
-                    onAddSuccess={this.onAddSuccess.bind(this)}
-                />
-                <SensorsList toogleModal={this.toogleModal.bind(this)} sensors={this.state.sensors}/>
+                <SensorsList sensors={this.state.sensors}/>
             </AdminContent>
         )
     }
