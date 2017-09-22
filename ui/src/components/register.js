@@ -9,7 +9,6 @@ import {
     Label,
     FormGroup,
     Button,
-    Col,
     Alert
 } from 'ahoy-reactstrap';
 
@@ -20,52 +19,34 @@ const Register = ({handleInputChange, handleSubmit, errorMessage}) => {
             <CardBody>
                 <form onSubmit={handleSubmit}>
                     <FormGroup>
-                        <div className="form-row">
-                            <Col md="6">
-                                <Label>First name</Label>
-                                <Input type="text" name="first_name" required placeholder="Enter first name" onChange={handleInputChange}/>
-                            </Col>
-                        </div>
+                        <Label>First name</Label>
+                        <Input type="text" name="first_name" required placeholder="Enter firstname"
+                               onChange={handleInputChange}/>
                     </FormGroup>
                     <FormGroup>
-                        <div className="form-row">
-                            <Col md="6">
-                                <Label>Last name</Label>
-                                <Input type="text" name="last_name" required placeholder="Enter last name" onChange={handleInputChange}/>
-                            </Col>
-                        </div>
+                        <Label>Last name</Label>
+                        <Input type="text" name="last_name" required placeholder="Enter lastname"
+                               onChange={handleInputChange}/>
                     </FormGroup>
                     <FormGroup>
-                        <div className="form-row">
-                            <Col md="6">
-                                <Label>Email address</Label>
-                                <Input type="email" name="email" required placeholder="Enter email" onChange={handleInputChange}/>
-                            </Col>
-                        </div>
+                        <Label>Email address</Label>
+                        <Input type="email" name="email" required placeholder="Enter email"
+                               onChange={handleInputChange}/>
                     </FormGroup>
                     <FormGroup>
-                        <div className="form-row">
-                            <Col md="6">
-                                <Label>Phone</Label>
-                                <Input type="phone" name="phone" required placeholder="Enter phone" onChange={handleInputChange}/>
-                            </Col>
-                        </div>
+                        <Label>Phone</Label>
+                        <Input type="phone" name="phone" required placeholder="Enter phone"
+                               onChange={handleInputChange}/>
                     </FormGroup>
                     <FormGroup>
-                        <div className="form-row">
-                            <Col md="6">
-                                <Label>Password</Label>
-                                <Input type="password" name="password" required placeholder="Password" onChange={handleInputChange}/>
-                            </Col>
-                        </div>
+                        <Label>Password</Label>
+                        <Input type="password" name="password" required placeholder="Password"
+                               onChange={handleInputChange}/>
                     </FormGroup>
                     <FormGroup>
-                        <div className="form-row">
-                            <Col md="6">
-                                <Label>Confirm Password</Label>
-                                <Input type="password" name="confirmed_password" required placeholder="Confirm password" onChange={handleInputChange}/>
-                            </Col>
-                        </div>
+                        <Label>Confirm Password</Label>
+                        <Input type="password" name="confirmed_password" required placeholder="Confirm password"
+                               onChange={handleInputChange}/>
                     </FormGroup>
                     <Button color="primary" type="submit" block>Register</Button>
                 </form>
@@ -75,8 +56,8 @@ const Register = ({handleInputChange, handleSubmit, errorMessage}) => {
                 </div>
             </CardBody>
             {errorMessage && <CardFooter>
-                    <Alert color="danger"> {errorMessage} </Alert>
-                </CardFooter>
+                <Alert color="danger"> {errorMessage} </Alert>
+            </CardFooter>
             }
         </Card>
     )

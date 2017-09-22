@@ -11,10 +11,10 @@ const Sensor = ({sensor}) => {
 
     return (
         <div>
-            <SensorBox title={`Sensor - ${sensor.id}`} icon="fa fa-bar-chart">
+            <SensorBox title={`Sensor - ${sensor.id}`} icon="fa fa-bar-chart" headerClass="bg-success text-white">
                 <ReactHighcharts config={getChartConfig(sensor)}/>
             </SensorBox>
-            <SensorBox title={`Sensor ${sensor.id} position`} icon="fa fa-globe">
+            <SensorBox title={`Sensor ${sensor.id} position`} icon="fa fa-globe" headerClass="bg-danger text-white">
                 <MapWithMarkers markers={[marker]}/>
             </SensorBox>
         </div>
