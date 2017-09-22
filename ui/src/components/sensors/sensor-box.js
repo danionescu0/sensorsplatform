@@ -8,12 +8,12 @@ import {
     CardTitle,
 } from 'ahoy-reactstrap';
 
-const SensorBox = ({children, title, icon}) => {
+const SensorBox = ({children, title, icon, headerClass}) => {
     return (
         <Row>
             <Col lg="12">
-                <Card className="mb-5" outline color="primary">
-                    <CardHeader color="danger">
+                <Card className="mb-5">
+                    <CardHeader className={headerClass}>
                         <CardTitle>
                             <i className={icon} aria-hidden="true"/> &nbsp; {title}
                         </CardTitle>
