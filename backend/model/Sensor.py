@@ -13,3 +13,21 @@ class Sensor():
         self.type = type
         self.latest_value = latest_value
         self.latest = latest
+        self._name = None
+        self._gis = None
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value: str):
+        self._name = value
+
+    @property
+    def gis(self) -> Tuple[float, float]:
+        return self._gis
+
+    @gis.setter
+    def gis(self, value: Tuple[float, float]):
+        self._gis = value

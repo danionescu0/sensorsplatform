@@ -11,10 +11,10 @@ const Sensor = ({sensor}) => {
 
     return (
         <div>
-            <SensorBox title={`Sensor - ${sensor.id}`} icon="fa fa-bar-chart" headerClass="bg-success text-white">
+            <SensorBox title={`Sensor - ${sensor._name}`} icon="fa fa-bar-chart" headerClass="bg-success text-white">
                 <ReactHighcharts config={getChartConfig(sensor)}/>
             </SensorBox>
-            <SensorBox title={`Sensor ${sensor.id} position`} icon="fa fa-globe" headerClass="bg-danger text-white">
+            <SensorBox title={`Sensor ${sensor._name} position`} icon="fa fa-globe" headerClass="bg-danger text-white">
                 <MapWithMarkers markers={[marker]}/>
             </SensorBox>
         </div>
@@ -22,9 +22,9 @@ const Sensor = ({sensor}) => {
 };
 
 const getChartConfig = sensor => {
-    var chartData = []
+    var chartData = [];
     if (sensor.length !== 0) {
-         var chartData = sensor.latest.map(value => [value[0] * 1000, parseFloat(value[1])]);
+         chartData = sensor.latest.map(value => [value[0] * 1000, parseFloat(value[1])]);
     }
 
     return {
@@ -46,7 +46,7 @@ const getChartConfig = sensor => {
             }
         },
         series: [{
-            name: sensor.id,
+            name: sensor.name,
             data: chartData
         }]
     };
