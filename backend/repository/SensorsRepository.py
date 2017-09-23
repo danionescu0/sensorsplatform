@@ -9,7 +9,7 @@ from repository.AbstractMongoRepository import AbstractMongoRepository
 
 class SensorsRepository(AbstractMongoRepository):
     COLLECTION_NAME = 'sensors'
-    VALUES_TO_KEEP = 10
+    VALUES_TO_KEEP = 50
 
     def __init__(self, host_uri: str) -> None:
         super(SensorsRepository, self).__init__(host_uri)
@@ -46,12 +46,13 @@ class SensorsRepository(AbstractMongoRepository):
         self.get_collection().update_one({"_id": ObjectId(sensor.id)}, update_data, True)
 
     def __hidrate(self, raw_data):
-        parsed = []
-        for data in raw_data:
-            data['latest'] = [(latest['timestamp'], latest['value']) for latest in data['latest']]
-            parsed.append(data)
+        sensors = []
 
-        return [
-            Sensor(str(element['_id']), element['type'], element['latest_value'], element['latest'])
-            for element in parsed
-        ]
+        for data in raw_data:
+            latest = [(latest['timestamp'], latest['value']) for latest in data['latest']]
+            sensor = Sensor(str(data['_id']), data['type'], data['latest_value'], latest)
+            sensor.name = data['name']
+            sensor.gis = (float(data['gis']['lat']), float(data['gis']['lng']))
+            sensors.append(sensor)
+
+        return sensors

@@ -6,7 +6,6 @@ import tornado.web
 
 from container import Container
 from web.SensorsHandler import SensorsHandler
-from web.HelloHandler import HelloHandler
 from web.AuthHandler import AuthHandler
 from web.SensorEventHandler import SensorEventHandler
 from model.Event import Event
@@ -32,7 +31,6 @@ def make_app():
         (r"/user-sensors/(.*)", SensorsHandler, dict(sensors_repo=sensors_repo, users_repo=users_repo)),
         (r"/users", UsersHandler, dict(users_repo=users_repo)),
         (r"/users/(.*)", UsersHandler, dict(users_repo=users_repo)),
-        (r"/hello", HelloHandler)
     ])
 
 parser = argparse.ArgumentParser(description='Port')

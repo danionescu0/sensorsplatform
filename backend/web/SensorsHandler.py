@@ -13,8 +13,8 @@ class SensorsHandler(CorsHandler):
         self.__users_repo = users_repo
 
     @secure
-    def get(self, userId):
-        user = self.__users_repo.get_by_id(userId)
+    def get(self, user_id):
+        user = self.__users_repo.get_by_id(user_id)
         if not user:
             self.set_status(404)
             return
