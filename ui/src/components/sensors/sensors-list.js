@@ -60,7 +60,8 @@ const renderRows = sensors => {
             <tr key={index}>
                 <td>{sensor.id}</td>
                 <td>{SENSOR_TYPES[sensor.type]}</td>
-                <td>{sensor.latest_value}</td>
+                {sensor.latest_value.hasOwnProperty('lat')  ?
+                    sensor.latest_value.lat + ' & ' + sensor.latest_value.lng : sensor.latest_value}
                 <td>
                     <Link to={`/sensors/${sensor.id}`}>
                         <Button color="primary"><i className="fa fa-info-circle"/> {' '}Details</Button>

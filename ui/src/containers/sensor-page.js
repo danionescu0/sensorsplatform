@@ -2,32 +2,41 @@ import React, { Component } from 'react';
 
 import AdminContent from '../components/admin-content';
 import Sensor from '../components/sensors/sensor';
-
-const sensor = {
-    id: 1,
-    latest_value: 10,
-    type: 'temperature',
-    lat: 44.4205602,
-    lng: 26.1854989,
-    latest: [
-        {value : 25, timestamp : 1503347176.144763 },
-        { value : 25.6, timestamp : 1503347186.294086 },
-        { value : 24, timestamp : 1503347196.460394 },
-        { value : 26, timestamp : 1503347206.613431 },
-        { value : 24, timestamp : 1503347506.613431 },
-        { value : 26.1, timestamp : 1503348206.613431 },
-        { value : 26.5, timestamp : 1503348406.613431 },
-        { value : 26.8, timestamp : 1503348606.613431 },
-        { value : 26.3, timestamp : 1503349206.613431 },
-    ]
-};
+import {getJson} from '../utils/fetch';
+import Auth from "../utils/auth";
 
 class SensorPage extends Component {
+        constructor(props) {
+        super(props);
+        this.state = {
+            errorMessage: null,
+            sensor: [],
+        }
+    }
+
+    componentDidMount() {
+        this.loadSensorData();
+    }
+
+    // @ToDo make a request to a new backend get method only for one sensor
+    loadSensorData() {
+        var sensorId = this.props.match.params.id;
+        getJson(`/user-sensors/${Auth.getUserId()}`).then(sensors => {
+            for (var sensor in sensors) {
+                if (sensorId !== sensors[sensor].id) {
+                    continue;
+                }
+                sensors[sensor].lat = 44.4205602;
+                sensors[sensor].lng = 26.1854989;
+                this.setState({sensor: sensors[sensor]});
+            }
+        });
+    }
 
     render() {
         return (
             <AdminContent>
-                <Sensor sensor={sensor}/>
+                <Sensor sensor={this.state.sensor} />
             </AdminContent>
         )
     }
