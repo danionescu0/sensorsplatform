@@ -22,7 +22,10 @@ const Sensor = ({sensor}) => {
 };
 
 const getChartConfig = sensor => {
-    const chartData = sensor.latest.map(value => [value.timestamp * 1000, value.value]);
+    var chartData = []
+    if (sensor.length !== 0) {
+         var chartData = sensor.latest.map(value => [value[0] * 1000, parseFloat(value[1])]);
+    }
 
     return {
         chart: {
