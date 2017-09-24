@@ -7,6 +7,7 @@ from lock.TimedLock import TimedLock
 from repository.RulesRepository import RulesRepository
 from repository.SensorsRepository import SensorsRepository
 from repository.UsersRepository import UsersRepository
+from repository.AlertRepository import AlertRepository
 from rules.RuleChecker import RuleChecker
 from rules.interpretter.InterpretterContext import InterpretterContext
 from rules.parser.AverageSensorTokenConverter import AverageSensorTokenConverter
@@ -25,6 +26,7 @@ from services.LoggingConfig import LoggingConfig
 from sync_events.ValidRuleEvent import ValidRuleEvent
 from tasks.RulesEvaluator import RulesEvaluator
 from tasks.StoreMomentaryData import StoreMomentaryData
+from tasks.StoreDurableData import StoreDurableData
 from tasks.TaskRunner import TaskRunner
 
 
@@ -64,6 +66,10 @@ class Container():
         return StoreMomentaryData(Container.get('sensors_repository'), Container.get('async_jobs'), Container.get('logging'))
 
     @staticmethod
+    def store_durable_data():
+        return StoreDurableData(Container.get('sensors_repository'), Container.get('logging'))
+
+    @staticmethod
     def rules_evaluator():
         return RulesEvaluator(Container.get('rules_repository'), Container.get('sensors_repository'),
                               Container.get('users_repository'), Container.get('rule_checker'),
@@ -73,6 +79,7 @@ class Container():
     def task_runner():
         task_runner = TaskRunner()
         task_runner.add_task(Container.get('store_momentary_data'))
+        task_runner.add_task(Container.get('store_durable_data'))
         task_runner.add_task(Container.get('rules_evaluator'))
 
         return task_runner
@@ -92,6 +99,10 @@ class Container():
     @staticmethod
     def sensors_repository():
         return SensorsRepository(config.mongodb_uri)
+
+    @staticmethod
+    def alerts_repository():
+        return AlertRepository(config.mongodb_uri)
 
     @staticmethod
     def timed_lock():

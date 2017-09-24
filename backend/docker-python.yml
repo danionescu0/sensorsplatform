@@ -13,7 +13,7 @@ services:
         - mongodb
         - redis
 
-  python-store-data1:
+  python-store-momentary-data1:
       build: .
       entrypoint: python3 ./multisensorsplatform/consummer.py --task store_momentary_data
       volumes:
@@ -23,6 +23,18 @@ services:
         - rabbitmq
         - mongodb
         - redis
+
+  python-store-durable-data1:
+      build: .
+      entrypoint: python3 ./multisensorsplatform/consummer.py --task store_durable_data
+      volumes:
+        - /home/ionescu/projects/python/multisensorsplatform/backend:/root/multisensorsplatform
+        - /var/log:/var/log
+      depends_on:
+        - rabbitmq
+        - mongodb
+        - redis
+        - cassandra
 
   python-rules_evaluator1:
       build: .

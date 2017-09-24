@@ -1,14 +1,16 @@
 from logging import RootLogger
 
+from repository.SensorsRepository import SensorsRepository
 from model.Event import Event
 from tasks.BaseTask import BaseTask
 
 class StoreDurableData(BaseTask):
+    def __init__(self, sensors_repository: SensorsRepository,  logging: RootLogger) -> None:
+        self.__sensors_repository = sensors_repository
+        self.__logging = logging
+
     def run(self, event: Event):
-        self.__sensors_repository.update(event.model)
-        sensor_persisted_event = Event(Event.TYPE_SENSOR_PERSISTED, event.model)
-        self.__get_configured_async_jobs().publish(sensor_persisted_event)
-        self.__logging.info("Event persisted with id: {0} and value {1}".format(event.model.id, event.model.latest_value))
+        self.__logging.debug("will store durable data")
 
     def get_name(self):
         return 'store_durable_data'
