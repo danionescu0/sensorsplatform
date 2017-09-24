@@ -26,7 +26,7 @@ class SensorPage extends Component {
                 if (sensorId !== sensors[sensor].id) {
                     continue;
                 }
-                sensors[sensor].lat = 44.4205602;
+                sensors[sensor].lat = 44.4205602; // fix this
                 sensors[sensor].lng = 26.1854989;
                 this.setState({sensor: sensors[sensor]});
             }

@@ -1,2 +1,2 @@
-{ "_id" : { "$oid" : "59949d9df1bfad450757cd5f" }, "userid" : "599868bb677e0457a9137039", "rule_text" : "and  (gt(S[599899fa956aac88fe217197], 58), lt(TIME, 20:10) )", "triggers" : [ "email", "sms" ], "trigger_min_interval" : 30 }
-{ "_id" : { "$oid" : "599523d12cda0aadbce84378" }, "userid" : "599868bb677e0457a9137039", "rule_text" : "gt(SPEED[59b5823399e226326a03fc75], 20) ", "triggers" : [ "voice", "sms" ] }
+{ "_id" : { "$oid" : "59949d9df1bfad450757cd5f" }, "userid" : "599868bb677e0457a9137039", "rule_text" : "and  (gt(S[599899fa956aac88fe217197], 58), lt(TIME, 20:10) )", "name" : "Humidity exceded rule", "triggers" : [ "email", "sms" ], "trigger_min_interval" : 30 }
+{ "_id" : { "$oid" : "599523d12cda0aadbce84378" }, "userid" : "599868bb677e0457a9137039", "rule_text" : "gt(SPEED[59b5823399e226326a03fc75], 20) ", "name" : "Speed Limit for vehicule 12", "triggers" : [ "voice", "sms" ] }
