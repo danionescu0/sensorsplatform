@@ -5,11 +5,12 @@ import tornado.ioloop
 import tornado.web
 
 from container import Container
+from model.Event import Event
 from web.SensorsHandler import SensorsHandler
 from web.AuthHandler import AuthHandler
 from web.SensorEventHandler import SensorEventHandler
-from model.Event import Event
 from web.UsersHandler import UsersHandler
+from web.AlertsHandler import AlertsHandler
 
 container = Container()
 
@@ -18,7 +19,9 @@ async_jobs = container.get('async_jobs')
 async_jobs.register_event(Event.TYPE_SENSOR_RECEIVED)
 logging = container.get('logging')
 users_repo = container.get('users_repository')
+alerts_repo = container.get('alerts_repository')
 sensors_repo = container.get('sensors_repository')
+rules_repo = container.get('rules_repository')
 jwt_token_factory = container.get('jwt_token_factory')
 
 def make_app():
@@ -29,6 +32,7 @@ def make_app():
         ),
         (r"/auth", AuthHandler, dict(users_repo=users_repo, token_factory=jwt_token_factory)),
         (r"/user-sensors/(.*)", SensorsHandler, dict(sensors_repo=sensors_repo, users_repo=users_repo)),
+        (r"/alerts/user/(.*)", AlertsHandler, dict(alerts_repo=alerts_repo, rules_repo=rules_repo, users_repo=users_repo)),
         (r"/users", UsersHandler, dict(users_repo=users_repo)),
         (r"/users/(.*)", UsersHandler, dict(users_repo=users_repo)),
     ])
