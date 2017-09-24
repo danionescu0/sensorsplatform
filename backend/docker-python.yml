@@ -15,7 +15,7 @@ services:
 
   python-store-data1:
       build: .
-      entrypoint: python3 ./multisensorsplatform/consummer.py --task store_data
+      entrypoint: python3 ./multisensorsplatform/consummer.py --task store_momentary_data
       volumes:
         - /home/ionescu/projects/python/multisensorsplatform/backend:/root/multisensorsplatform
         - /var/log:/var/log

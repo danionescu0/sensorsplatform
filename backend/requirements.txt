@@ -1,6 +1,7 @@
 tornado
 pymongo
 redis
+cassandra-driver
 pika
 blinker
 typeguard
