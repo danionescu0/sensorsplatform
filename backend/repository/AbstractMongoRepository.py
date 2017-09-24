@@ -8,7 +8,7 @@ class AbstractMongoRepository():
         self.__host_uri = host_uri
         self.__collection = None
 
-    def get_collection(self):
+    def get_collection(self) -> MongoClient:
         if None != self.__collection:
             return self.__collection
 
@@ -23,4 +23,5 @@ class AbstractMongoRepository():
     def default_val(self, dictionary, key, default):
         if key in dictionary.keys():
             return dictionary[key]
+
         return default

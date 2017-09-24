@@ -1,3 +1,5 @@
+from typing import List
+
 from repository.AbstractMongoRepository import AbstractMongoRepository
 from model.Rule import Rule
 
@@ -8,7 +10,7 @@ class RulesRepository(AbstractMongoRepository):
     def __init__(self, host_uri: str) -> None:
         super(RulesRepository, self).__init__(host_uri)
 
-    def get_for_user(self, userid: str):
+    def get_for_user(self, userid: str) -> List[Rule]:
         return self.__hidrate(self.get_collection().find({'userid' : userid}))
 
     def __hidrate(self, raw_data):
