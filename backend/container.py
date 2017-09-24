@@ -24,7 +24,7 @@ from services.EmailSender import EmailSender
 from services.LoggingConfig import LoggingConfig
 from sync_events.ValidRuleEvent import ValidRuleEvent
 from tasks.RulesEvaluator import RulesEvaluator
-from tasks.StoreData import StoreData
+from tasks.StoreMomentaryData import StoreMomentaryData
 from tasks.TaskRunner import TaskRunner
 
 
@@ -60,8 +60,8 @@ class Container():
         return EmailSender(config.email['email'], config.email['password'], config.email['notifiedAddress'])
 
     @staticmethod
-    def store_data():
-        return StoreData(Container.get('sensors_repository'), Container.get('async_jobs'), Container.get('logging'))
+    def store_momentary_data():
+        return StoreMomentaryData(Container.get('sensors_repository'), Container.get('async_jobs'), Container.get('logging'))
 
     @staticmethod
     def rules_evaluator():
@@ -72,7 +72,7 @@ class Container():
     @staticmethod
     def task_runner():
         task_runner = TaskRunner()
-        task_runner.add_task(Container.get('store_data'))
+        task_runner.add_task(Container.get('store_momentary_data'))
         task_runner.add_task(Container.get('rules_evaluator'))
 
         return task_runner

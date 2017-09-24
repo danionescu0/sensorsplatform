@@ -15,3 +15,8 @@ services:
     image: "redis:3.2.10"
     ports:
      - "6379:6379"
+
+  cassandra:
+    image: "cassandra:2.1"
+    ports:
+     - "9042:9042"
