@@ -6,7 +6,7 @@ import SensorBox from "./sensor-box";
 
 const Sensor = ({sensor}) => {
     const marker = {
-        position: {lat: sensor.lat, lng: sensor.lng},
+        position: {lat: sensor._gis[0], lng: sensor._gis[1]},
     };
 
     return (

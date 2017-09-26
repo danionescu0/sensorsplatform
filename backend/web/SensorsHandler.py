@@ -26,6 +26,8 @@ class SensorsHandler(CorsHandler):
     def post(self, userId):
         data = json.loads(self.request.body.decode("utf-8"))
         sensor = Sensor(None, data['type'], 0, [])
+        sensor.name = data['name']
+        sensor.gis = (data['lat'], data['lng'])
         sensor_id = self.__sensors_repo.create(sensor)
         self.__users_repo.add_sensor_id(userId, str(sensor_id))
         self.set_status(201)

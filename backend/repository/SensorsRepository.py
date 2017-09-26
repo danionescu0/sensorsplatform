@@ -27,7 +27,7 @@ class SensorsRepository(AbstractMongoRepository):
         return self.__hidrate(self.find({"_id": {'$in': object_ids}}))
 
     def create(self, sensor: Sensor) -> str:
-        return self.get_collection().insert_one(sensor.__dict__).inserted_id
+        return self.get_collection().insert_one(sensor.to_mongo_doc()).inserted_id
 
     def update(self, sensor: Sensor):
         update_data = {

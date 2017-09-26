@@ -10,7 +10,7 @@ class SensorPage extends Component {
         super(props);
         this.state = {
             errorMessage: null,
-            sensor: [],
+            sensor: null,
         }
     }
 
@@ -20,23 +20,17 @@ class SensorPage extends Component {
 
     // @ToDo make a request to a new backend get method only for one sensor
     loadSensorData() {
-        var sensorId = this.props.match.params.id;
+        const sensorId = this.props.match.params.id;
         getJson(`/user-sensors/${Auth.getUserId()}`).then(sensors => {
-            for (var sensor in sensors) {
-                if (sensorId !== sensors[sensor].id) {
-                    continue;
-                }
-                sensors[sensor].lat = 44.4205602; // fix this
-                sensors[sensor].lng = 26.1854989;
-                this.setState({sensor: sensors[sensor]});
-            }
+            const sensor = sensors.filter(sensor => sensor.id === sensorId).pop();
+            this.setState({sensor: sensor});
         });
     }
 
     render() {
         return (
             <AdminContent>
-                <Sensor sensor={this.state.sensor} />
+                {this.state.sensor && <Sensor sensor={this.state.sensor} />}
             </AdminContent>
         )
     }
