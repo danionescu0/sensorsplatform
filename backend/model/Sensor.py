@@ -31,3 +31,13 @@ class Sensor():
     @gis.setter
     def gis(self, value: Tuple[float, float]):
         self._gis = value
+
+    def to_mongo_doc(self):
+        doc = self.__dict__
+        gis = doc.get("_gis")
+        doc["name"] = doc.get("_name")
+        doc["gis"] = {"lat": gis[0], "lng": gis[1]}
+        doc.pop("_name")
+        doc.pop("_gis")
+
+        return doc

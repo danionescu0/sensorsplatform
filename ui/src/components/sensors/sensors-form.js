@@ -37,6 +37,10 @@ const SensorsForm = ({handleInputChange, handleSubmit, error, onLocationChanged,
                 <CardBody>
                     <form onSubmit={handleSubmit} className="mb-5">
                         <FormGroup>
+                            <Label for="exampleSelect">Name type</Label>
+                            <Input required type="text" name="name" placeholder="Write sensor name" onChange={handleInputChange}/>
+                        </FormGroup>
+                        <FormGroup>
                             <Label for="exampleSelect">Select sensor type</Label>
                             <Input required type="select" name="type" onChange={handleInputChange}>
                                 <option/>
@@ -45,7 +49,7 @@ const SensorsForm = ({handleInputChange, handleSubmit, error, onLocationChanged,
                         </FormGroup>
                     </form>
                     <MapWithMarkers markers={[marker]}/>
-                    {error && <Alert color="danger">{error}</Alert>}
+                    {error && <Alert className="mt-5" color="danger">{error}</Alert>}
                 </CardBody>
                 <CardFooter>
                     <Button color="primary" type="submit" onClick={handleSubmit}>Save</Button>{' '}

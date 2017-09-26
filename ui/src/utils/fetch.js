@@ -30,12 +30,13 @@ export const getJson = (path) => {
             },
         }).then(response => {
             if (!response.ok) {
-                throw Error(response.statusText);
+                reject(response.statusText);
+                return;
             }
             return response.json();
         }).then(token => {
             resolve(token);
-        }).catch(e => reject(e));
+        });
     });
 };
 
@@ -43,4 +44,4 @@ export const doFetch = (path, request) => {
     return fetch(API_ENDPOINT + path, request);
 };
 
-const API_ENDPOINT = 'http://localhost:8081';
+const API_ENDPOINT = 'http://localhost:8080';

@@ -19,6 +19,10 @@ class Auth {
     }
 
     static getUserId() {
+        if (!jwt.decode(Auth.getToken())) {
+            return null;
+        }
+
         return jwt.decode(Auth.getToken()).userid;
     }
 

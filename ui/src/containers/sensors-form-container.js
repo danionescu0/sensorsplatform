@@ -30,9 +30,9 @@ class SensorsFormContainer extends Component {
     handleSubmit(e) {
         const {form} = this.props;
         e.preventDefault();
-        if (!form.type) {
+        if (!form.type || !form.name) {
             this.setState({
-                errorMessage: "Please select sensor type"
+                errorMessage: "Please complete all fields"
             });
             return;
         }
@@ -43,7 +43,6 @@ class SensorsFormContainer extends Component {
             return;
         }
         const sensor = Object.assign({}, form, this.state.location);
-
         postJson(`/user-sensors/${Auth.getUserId()}`, sensor).then(() => {
             this.setState({errorMessage: ""});
             this.props.history.push("/sensors");

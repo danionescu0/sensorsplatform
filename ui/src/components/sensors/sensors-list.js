@@ -30,6 +30,7 @@ const SensorsList = ({sensors}) => {
                                 <thead>
                                     <tr>
                                         <th>Id</th>
+                                        <th>Name</th>
                                         <th>Type</th>
                                         <th>Latest Value</th>
                                         <th>Actions</th>
@@ -59,9 +60,13 @@ const renderRows = sensors => {
         return (
             <tr key={index}>
                 <td>{sensor.id}</td>
+                <td>{sensor._name}</td>
                 <td>{SENSOR_TYPES[sensor.type]}</td>
-                {sensor.latest_value.hasOwnProperty('lat')  ?
-                    sensor.latest_value.lat + ' & ' + sensor.latest_value.lng : sensor.latest_value}
+                <td>
+                    {sensor.latest_value.hasOwnProperty('lat')  ?
+                        sensor.latest_value.lat + ' & ' + sensor.latest_value.lng : sensor.latest_value}
+                </td>
+
                 <td>
                     <Link to={`/sensors/${sensor.id}`}>
                         <Button color="primary"><i className="fa fa-info-circle"/> {' '}Details</Button>
