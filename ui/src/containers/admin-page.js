@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    Col
-} from 'ahoy-reactstrap';
 
 import MapWithMarkers from '../components/map-with-markers';
 import LatestAlerts from '../components/latest-alerts'
 import {getJson} from '../utils/fetch';
 import Auth from "../utils/auth";
 import AdminContent from '../components/admin-content';
+import ContentBox from '../components/content-box';
+
 
 const markers = [
     {position: { lat: 44.425908, lng: 26.1236888 }},
@@ -41,15 +37,12 @@ class AdminPage extends Component {
     render() {
         return (
             <AdminContent>
-                <Col lg="12">
-                    <Card className="mb-5">
-                        <CardHeader>Sensors positions</CardHeader>
-                        <CardBody>
-                            <LatestAlerts alerts={this.state.latest_alerts}/>
-                            <MapWithMarkers markers={markers}/>
-                        </CardBody>
-                    </Card>
-                </Col>
+                <ContentBox title="Latest alerts" icon="fa fa-bell" headerClass="bg-danger text-white">
+                    <LatestAlerts alerts={this.state.latest_alerts}/>
+                </ContentBox>
+                <ContentBox title="Sensors positions" icon="fa fa-map-marker" headerClass="bg-info text-white">
+                    <MapWithMarkers markers={markers}/>
+                </ContentBox>
             </AdminContent>
         )
     }
