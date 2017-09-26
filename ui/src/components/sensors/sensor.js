@@ -2,7 +2,7 @@ import React from 'react';
 import ReactHighcharts from 'react-highcharts';
 
 import MapWithMarkers from '../map-with-markers';
-import SensorBox from "./sensor-box";
+import ContentBox from "../content-box";
 
 const Sensor = ({sensor}) => {
     const marker = {
@@ -11,12 +11,12 @@ const Sensor = ({sensor}) => {
 
     return (
         <div>
-            <SensorBox title={`Sensor - ${sensor._name}`} icon="fa fa-bar-chart" headerClass="bg-success text-white">
+            <ContentBox title={`Sensor - ${sensor._name}`} icon="fa fa-bar-chart" headerClass="bg-success text-white">
                 <ReactHighcharts config={getChartConfig(sensor)}/>
-            </SensorBox>
-            <SensorBox title={`Sensor ${sensor._name} position`} icon="fa fa-globe" headerClass="bg-danger text-white">
+            </ContentBox>
+            <ContentBox title={`Sensor ${sensor._name} position`} icon="fa fa-globe" headerClass="bg-danger text-white">
                 <MapWithMarkers markers={[marker]}/>
-            </SensorBox>
+            </ContentBox>
         </div>
     )
 };

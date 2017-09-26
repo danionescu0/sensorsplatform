@@ -8,7 +8,7 @@ import {
     CardTitle,
 } from 'ahoy-reactstrap';
 
-const SensorBox = ({children, title, icon, headerClass}) => {
+const ContentBox = ({children, title, icon, headerClass}) => {
     return (
         <Row>
             <Col lg="12">
@@ -27,4 +27,4 @@ const SensorBox = ({children, title, icon, headerClass}) => {
     )
 };
 
-export default SensorBox;
+export default ContentBox;
