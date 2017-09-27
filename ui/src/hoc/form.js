@@ -10,8 +10,14 @@ const withForm = WrapperComponent => class extends Component {
 
     handleInputChange(event) {
         const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
+
+        let value = target.value;
+        if (target.type === 'checkbox') {
+            value = target.checked;
+        } else  if(target.type === 'select-multiple') {
+            value = this.getSelectedValue(target);
+        }
 
         this.setState(function(prevState, props) {
             let form = prevState.form;
@@ -19,6 +25,13 @@ const withForm = WrapperComponent => class extends Component {
 
             return {form: form};
         });
+    }
+
+    getSelectedValue(target) {
+        const selectedValues = [];
+        Object.values(target.options).forEach(option => option.selected ? selectedValues.push(option.value) : null);
+
+        return selectedValues;
     }
 
     render() {
