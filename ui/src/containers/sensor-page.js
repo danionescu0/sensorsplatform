@@ -21,7 +21,7 @@ class SensorPage extends Component {
     // @ToDo make a request to a new backend get method only for one sensor
     loadSensorData() {
         const sensorId = this.props.match.params.id;
-        getJson(`/user-sensors/${Auth.getUserId()}`).then(sensors => {
+        getJson(`/users/${Auth.getUserId()}/sensors`).then(sensors => {
             const sensor = sensors.filter(sensor => sensor.id === sensorId).pop();
             this.setState({sensor: sensor});
         });
