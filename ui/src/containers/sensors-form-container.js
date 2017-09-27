@@ -43,7 +43,7 @@ class SensorsFormContainer extends Component {
             return;
         }
         const sensor = Object.assign({}, form, this.state.location);
-        postJson(`/user-sensors/${Auth.getUserId()}`, sensor).then(() => {
+        postJson(`/users/${Auth.getUserId()}/sensors`, sensor).then(() => {
             this.setState({errorMessage: ""});
             this.props.history.push("/sensors");
         }).catch(e => {

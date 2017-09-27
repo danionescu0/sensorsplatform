@@ -32,7 +32,7 @@ def make_app():
             dict(async_jobs = async_jobs, logging = logging)
         ),
         (r"/auth", AuthHandler, dict(users_repo=users_repo, token_factory=jwt_token_factory)),
-        (r"/user-sensors/(\w*)", SensorsHandler, dict(sensors_repo=sensors_repo, users_repo=users_repo)),
+        (r"/users/(\w*)/sensors", SensorsHandler, dict(sensors_repo=sensors_repo, users_repo=users_repo)),
         (r"/alerts/user/(\w*)", AlertsHandler, dict(alerts_repo=alerts_repo, rules_repo=rules_repo, users_repo=users_repo)),
         (r"/users/(\w*)/rules", RulesHandler, dict(rules_repo=rules_repo)),
         (r"/users", UsersHandler, dict(users_repo=users_repo)),

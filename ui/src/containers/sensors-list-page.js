@@ -19,7 +19,7 @@ class SensorsListPage extends Component {
     }
 
     loadSensors() {
-        getJson(`/user-sensors/${Auth.getUserId()}`).then(sensors => {
+        getJson(`/users/${Auth.getUserId()}/sensors`).then(sensors => {
             this.setState({sensors: sensors});
         });
     }
