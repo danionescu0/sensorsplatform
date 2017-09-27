@@ -5,22 +5,21 @@ import {
     Card,
     CardHeader,
     CardBody,
-    CardTitle,
+    CardFooter
 } from 'ahoy-reactstrap';
 
-const ContentBox = ({children, title, icon, headerClass}) => {
+const ContentBox = ({children, title, icon, headerClass, footer}) => {
     return (
         <Row>
             <Col lg="12">
                 <Card className="mb-5">
                     <CardHeader className={headerClass}>
-                        <CardTitle>
-                            <i className={icon} aria-hidden="true"/> &nbsp; {title}
-                        </CardTitle>
+                        <i className={icon} aria-hidden="true"/> &nbsp; {title}
                     </CardHeader>
                     <CardBody>
                         {children}
                     </CardBody>
+                    {footer && <CardFooter>{footer}</CardFooter>}
                 </Card>
             </Col>
         </Row>

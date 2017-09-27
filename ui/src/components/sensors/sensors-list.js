@@ -1,57 +1,42 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {
-    Row,
-    Col,
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    CardFooter,
     Button,
     Table
 } from 'ahoy-reactstrap';
+import ContentBox from '../content-box';
 
 import {SENSOR_TYPES} from './sensors-form';
 
 const SensorsList = ({sensors}) => {
     return (
-        <div>
-            <Row>
-                <Col lg="12">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>
-                                <i className="fa fa-table" aria-hidden="true"/> &nbsp;Sensors list
-                            </CardTitle>
-                        </CardHeader>
-                        <CardBody>
-                            <Table hover>
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Name</th>
-                                        <th>Type</th>
-                                        <th>Latest Value</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {renderRows(sensors)}
-                                </tbody>
-                            </Table>
-                        </CardBody>
-                        <CardFooter>
-                            <Link to="/sensors/add" >
-                                <Button color="success">
-                                    <i className="fa fa-plus" aria-hidden="true"/> &nbsp; Add Sensor
-                                </Button>
-                            </Link>
-                        </CardFooter>
-                    </Card>
-                </Col>
-            </Row>
-        </div>
+        <ContentBox title="Sensors list" footer={getFooter()} icon="fa fa-table" headerClass="bg-success text-white">
+            <Table hover>
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Latest Value</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {renderRows(sensors)}
+                </tbody>
+            </Table>
+        </ContentBox>
+
+    )
+};
+
+const getFooter = () => {
+    return (
+        <Link to="/sensors/add" >
+            <Button color="success">
+                <i className="fa fa-plus" aria-hidden="true"/> &nbsp; Add Sensor
+            </Button>
+        </Link>
     )
 };
 

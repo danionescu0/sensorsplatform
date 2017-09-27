@@ -5,7 +5,6 @@ import {
     Switch,
 } from 'react-router-dom'
 
-// import Admin from '../components/admin';
 import AdminPage from  './admin-page'
 import LoginPage from './login-page';
 import RegisterPage from './register-page';
@@ -13,6 +12,7 @@ import ForgotPassword from '../components/forgot-password';
 import SensorsListPage from './sensors-list-page';
 import SensorPage from './sensor-page';
 import SensorsFormContainer from './sensors-form-container';
+import RulesFormContainer from './rules-form-container';
 import RulesPage from './rules-page';
 import secure from '../hoc/secure';
 
@@ -25,6 +25,7 @@ class App extends Component {
             <Route exact path="/admin" component={secure(AdminPage)}/>
             <Route exact path="/" component={secure(AdminPage)}/>
             <Route exact path="/rules" component={secure(RulesPage)}/>
+            <Route exact path="/rules/add" component={secure(RulesFormContainer)}/>
             <Route exact path="/sensors" component={secure(SensorsListPage)}/>
             <Route exact path="/sensors/add" component={secure(SensorsFormContainer)}/>
             <Route path="/sensors/:id" component={secure(SensorPage)}/>

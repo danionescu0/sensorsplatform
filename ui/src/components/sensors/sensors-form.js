@@ -5,13 +5,9 @@ import {
     FormGroup,
     Button,
     Alert,
-    Card,
-    CardFooter,
-    CardHeader,
-    CardBody,
-    Col
 } from 'ahoy-reactstrap';
 
+import ContentBox from '../content-box';
 import MapWithMarkers from '../map-with-markers';
 
 export const SENSOR_TYPES = {
@@ -30,33 +26,26 @@ const SensorsForm = ({handleInputChange, handleSubmit, error, onLocationChanged,
         onDragEnd: onLocationChanged
     };
 
-    return (
-        <Col lg="12">
-            <Card className="mb-5">
-                <CardHeader>Add sensor</CardHeader>
-                <CardBody>
-                    <form onSubmit={handleSubmit} className="mb-5">
-                        <FormGroup>
-                            <Label for="exampleSelect">Name type</Label>
-                            <Input required type="text" name="name" placeholder="Write sensor name" onChange={handleInputChange}/>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="exampleSelect">Select sensor type</Label>
-                            <Input required type="select" name="type" onChange={handleInputChange}>
-                                <option/>
-                                {renderOptions()}
-                            </Input>
-                        </FormGroup>
-                    </form>
-                    <MapWithMarkers markers={[marker]}/>
-                    {error && <Alert className="mt-5" color="danger">{error}</Alert>}
-                </CardBody>
-                <CardFooter>
-                    <Button color="primary" type="submit" onClick={handleSubmit}>Save</Button>{' '}
-                </CardFooter>
-            </Card>
-        </Col>
+    const footer = <Button color="primary" type="submit" onClick={handleSubmit}>Save</Button>;
 
+    return (
+        <ContentBox title="Add Sensor" footer={footer} icon="fa fa-plus" headerClass="bg-success text-white">
+            <form onSubmit={handleSubmit} className="mb-5">
+                <FormGroup>
+                    <Label for="exampleSelect">Name type</Label>
+                    <Input required type="text" name="name" placeholder="Write sensor name" onChange={handleInputChange}/>
+                </FormGroup>
+                <FormGroup>
+                    <Label for="exampleSelect">Select sensor type</Label>
+                    <Input required type="select" name="type" onChange={handleInputChange}>
+                        <option/>
+                        {renderOptions()}
+                    </Input>
+                </FormGroup>
+            </form>
+            <MapWithMarkers markers={[marker]}/>
+            {error && <Alert className="mt-5" color="danger">{error}</Alert>}
+        </ContentBox>
     )
 };
 
