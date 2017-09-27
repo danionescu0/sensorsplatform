@@ -18,12 +18,16 @@ const RulesForm = ({handleInputChange, handleSubmit, error}) => {
         <ContentBox title="Add Rule" footer={footer} icon="fa fa-plus" headerClass="bg-success text-white">
             <form onSubmit={handleSubmit} className="mb-5">
                 <FormGroup>
-                    <Label>Name </Label>
-                    <Input required type="text" name="name" placeholder="Write rule name" onChange={handleInputChange}/>
+                    <Label>Rule Name </Label>
+                    <Input required type="text" name="rule_name" placeholder="Write rule name" onChange={handleInputChange}/>
+                </FormGroup>
+                <FormGroup>
+                    <Label>Rule </Label>
+                    <Input required type="text" name="rule_text" placeholder="Write rule to be evaluated" onChange={handleInputChange}/>
                 </FormGroup>
                 <FormGroup>
                     <Label>Select Trigger Type</Label>
-                    <Input required type="select" name="trigger" multiple onChange={handleInputChange}>
+                    <Input required type="select" name="triggers" multiple onChange={handleInputChange}>
                         {renderOptions()}
                     </Input>
                 </FormGroup>

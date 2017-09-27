@@ -1,5 +1,6 @@
 from typing import List
 
+
 class User:
     def __init__(self, first_name: str,  last_name: str, password: str , email: str, phone: str, sensor_ids: List[int]) -> None:
         self._userid = None

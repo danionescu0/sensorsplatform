@@ -6,6 +6,7 @@ import tornado.web
 
 from container import Container
 from model.Event import Event
+from web.RulesHandler import RulesHandler
 from web.SensorsHandler import SensorsHandler
 from web.AuthHandler import AuthHandler
 from web.SensorEventHandler import SensorEventHandler
@@ -31,10 +32,11 @@ def make_app():
             dict(async_jobs = async_jobs, logging = logging)
         ),
         (r"/auth", AuthHandler, dict(users_repo=users_repo, token_factory=jwt_token_factory)),
-        (r"/user-sensors/(.*)", SensorsHandler, dict(sensors_repo=sensors_repo, users_repo=users_repo)),
-        (r"/alerts/user/(.*)", AlertsHandler, dict(alerts_repo=alerts_repo, rules_repo=rules_repo, users_repo=users_repo)),
+        (r"/user-sensors/(\w*)", SensorsHandler, dict(sensors_repo=sensors_repo, users_repo=users_repo)),
+        (r"/alerts/user/(\w*)", AlertsHandler, dict(alerts_repo=alerts_repo, rules_repo=rules_repo, users_repo=users_repo)),
+        (r"/users/(\w*)/rules", RulesHandler, dict(rules_repo=rules_repo)),
         (r"/users", UsersHandler, dict(users_repo=users_repo)),
-        (r"/users/(.*)", UsersHandler, dict(users_repo=users_repo)),
+        (r"/users/(\w*)", UsersHandler, dict(users_repo=users_repo)),
     ])
 
 parser = argparse.ArgumentParser(description='Port')
