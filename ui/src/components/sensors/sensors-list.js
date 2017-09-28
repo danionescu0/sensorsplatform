@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {
     Button,
-    Table
+    Table,
 } from 'ahoy-reactstrap';
 import ContentBox from '../content-box';
 
@@ -11,7 +11,7 @@ import {SENSOR_TYPES} from './sensors-form';
 const SensorsList = ({sensors}) => {
     return (
         <ContentBox title="Sensors list" footer={getFooter()} icon="fa fa-table" headerClass="bg-success text-white">
-            <Table hover>
+            <Table responsive hover>
                 <thead>
                 <tr>
                     <th>Id</th>
