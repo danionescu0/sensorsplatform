@@ -10,7 +10,7 @@ import ContentBox from '../content-box';
 const RulesList = ({rules}) => {
     return (
         <ContentBox title="Rules list" footer={getTableFooter()} icon="fa fa-th-list" headerClass="bg-success text-white">
-            <Table hover>
+            <Table responsive hover>
                 <thead>
                 <tr>
                     <th>Id</th>
