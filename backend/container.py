@@ -1,4 +1,6 @@
+from typing import Callable
 import sys
+from logging import RootLogger
 
 import config
 from listener.SendEmailAlertListener import SendEmailAlertListener
@@ -29,133 +31,129 @@ from tasks.StoreMomentaryData import StoreMomentaryData
 from tasks.StoreDurableData import StoreDurableData
 from tasks.TaskRunner import TaskRunner
 
+def singleton(function: Callable):
+    caching = {}
+    def wrapper(*args, **kwargs):
+        if function.__name__ in caching:
+            return caching[function.__name__]
+        caching[function.__name__] = function(*args, **kwargs)
+
+        return caching[function.__name__]
+
+    return wrapper
 
 class Container():
-    cached = {}
-    uncacheable = ['async_jobs']
-
-    @staticmethod
-    def get(service_name):
-        if service_name in Container.uncacheable:
-            return getattr(Container, service_name)()
-        if service_name in Container.cached.keys():
-            return Container.cached[service_name]
-        Container.cached[service_name] = getattr(Container, service_name)()
-
-        return Container.cached[service_name]
-
-    @staticmethod
-    def async_jobs():
+    def async_jobs(self) -> AsyncJobs:
         return AsyncJobs(config.rabbitmq_host)
 
-    @staticmethod
-    def send_email_alert_listener():
-        return SendEmailAlertListener(Container.get('email_sender'), Container.get('rule_timed_lock'),
-                                      Container.get('logging'))
+    @singleton
+    def send_email_alert_listener(self) -> SendEmailAlertListener:
+        return SendEmailAlertListener(self.email_sender(), self.rule_timed_lock(),
+                                      self.logging())
 
-    @staticmethod
-    def valid_rule_event():
+    @singleton
+    def valid_rule_event(self) -> ValidRuleEvent:
         return ValidRuleEvent()
 
-    @staticmethod
-    def email_sender():
+    @singleton
+    def email_sender(self) -> EmailSender:
         return EmailSender(config.email['email'], config.email['password'], config.email['notifiedAddress'])
 
-    @staticmethod
-    def store_momentary_data():
-        return StoreMomentaryData(Container.get('sensors_repository'), Container.get('async_jobs'), Container.get('logging'))
+    @singleton
+    def store_momentary_data(self) -> StoreMomentaryData:
+        return StoreMomentaryData(self.sensors_repository(), self.async_jobs(), self.logging())
 
-    @staticmethod
-    def store_durable_data():
-        return StoreDurableData(Container.get('sensors_repository'), Container.get('logging'))
+    @singleton
+    def store_durable_data(self) -> StoreDurableData:
+        return StoreDurableData(self.sensors_repository(), self.logging())
 
-    @staticmethod
-    def rules_evaluator():
-        return RulesEvaluator(Container.get('rules_repository'), Container.get('sensors_repository'),
-                              Container.get('users_repository'), Container.get('rule_checker'),
-                              Container.get('valid_rule_event'), Container.get('logging'))
+    @singleton
+    def rules_evaluator(self) -> RulesEvaluator:
+        return RulesEvaluator(self.rules_repository(), self.sensors_repository(),
+                              self.users_repository(), self.rule_checker(),
+                              self.valid_rule_event(), self.logging())
 
-    @staticmethod
-    def task_runner():
+    @singleton
+    def task_runner(self) -> TaskRunner:
         task_runner = TaskRunner()
-        task_runner.add_task(Container.get('store_momentary_data'))
-        task_runner.add_task(Container.get('store_durable_data'))
-        task_runner.add_task(Container.get('rules_evaluator'))
+        task_runner.add_task(self.store_momentary_data())
+        task_runner.add_task(self.store_durable_data())
+        task_runner.add_task(self.rules_evaluator())
 
         return task_runner
 
-    @staticmethod
-    def rules_repository():
+    @singleton
+    def rules_repository(self) -> RulesRepository:
         return RulesRepository(config.mongodb_uri)
 
-    @staticmethod
-    def rule_checker():
-        return RuleChecker(Container.get('expression_builder'), Container.get('interpretter_context'))
+    @singleton
+    def rule_checker(self) -> RuleChecker:
+        return RuleChecker(self.expression_builder(), self.interpretter_context())
 
-    @staticmethod
-    def users_repository():
+    @singleton
+    def users_repository(self) -> UsersRepository:
         return UsersRepository(config.mongodb_uri)
 
-    @staticmethod
-    def sensors_repository():
+    @singleton
+    def sensors_repository(self) -> SensorsRepository:
         return SensorsRepository(config.mongodb_uri)
 
-    @staticmethod
-    def alerts_repository():
+    @singleton
+    def alerts_repository(self) -> AlertRepository:
         return AlertRepository(config.mongodb_uri)
 
-    @staticmethod
-    def timed_lock():
+    @singleton
+    def timed_lock(self) -> TimedLock:
         return TimedLock(config.redis['host'], config.redis['port'])
 
-    @staticmethod
-    def rule_timed_lock():
-        return RuleTimedLock(Container.get('timed_lock'))
+    @singleton
+    def rule_timed_lock(self) -> RuleTimedLock:
+        return RuleTimedLock(self.timed_lock())
 
-    @staticmethod
-    def tokenizer():
-        tokenizer = Tokenizer(Container.get('logging'))
-        tokenizer.add_token_converter(Container.get('average_sensor_token_converter'))
-        tokenizer.add_token_converter(Container.get('sensor_token_converter'))
-        tokenizer.add_token_converter(Container.get('gis_distance_token_converter'))
-        tokenizer.add_token_converter(Container.get('speed_token_converter'))
+    @singleton
+    def tokenizer(self) -> Tokenizer:
+        tokenizer = Tokenizer(self.logging())
+        tokenizer.add_token_converter(self.average_sensor_token_converter())
+        tokenizer.add_token_converter(self.sensor_token_converter())
+        tokenizer.add_token_converter(self.gis_distance_token_converter())
+        tokenizer.add_token_converter(self.speed_token_converter())
         tokenizer.add_token_converter(BooleanTokenConverter())
         tokenizer.add_token_converter(CurrentTimeTokenConverter())
         tokenizer.add_token_converter(IntTokenConverter())
 
         return tokenizer
 
-    @staticmethod
-    def average_sensor_token_converter():
-        return AverageSensorTokenConverter(Container.get('sensors_repository'))
+    @singleton
+    def average_sensor_token_converter(self) -> AverageSensorTokenConverter:
+        return AverageSensorTokenConverter(self.sensors_repository())
 
-    @staticmethod
-    def sensor_token_converter():
-        return SensorTokenConverter(Container.get('sensors_repository'))
+    @singleton
+    def sensor_token_converter(self) -> SensorTokenConverter:
+        return SensorTokenConverter(self.sensors_repository())
 
-    @staticmethod
-    def gis_distance_token_converter():
-        return GisDistanceTokenConverter(Container.get('sensors_repository'))
+    @singleton
+    def gis_distance_token_converter(self) -> GisDistanceTokenConverter:
+        return GisDistanceTokenConverter(self.sensors_repository())
 
-    @staticmethod
-    def speed_token_converter():
-        return SpeedTokenConverter(Container.get('sensors_repository'))
+    @singleton
+    def speed_token_converter(self) -> SpeedTokenConverter:
+        return SpeedTokenConverter(self.sensors_repository())
 
-    @staticmethod
-    def expression_builder():
-        return ExpressionBuilder(Container.get('tokenizer'))
+    @singleton
+    def expression_builder(self) -> ExpressionBuilder:
+        return ExpressionBuilder(self.tokenizer())
 
-    @staticmethod
-    def interpretter_context():
+    @singleton
+    def interpretter_context(self) -> InterpretterContext:
         return InterpretterContext()
 
-    @staticmethod
-    def logging():
+    @singleton
+    def logging(self) -> RootLogger:
         logging_config = LoggingConfig(config.logging['log_file'], config.logging['log_entries'])
         sys.excepthook = logging_config.set_error_hadler
 
         return logging_config.get_logger()
 
-    @staticmethod
-    def jwt_token_factory():
+    @singleton
+    def jwt_token_factory(self) -> JwtTokenFactory:
         return JwtTokenFactory(config.web['jwt_secret'])

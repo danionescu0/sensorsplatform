@@ -12,7 +12,6 @@ class SpeedTokenConverter(TokenConverter):
         self.__sensors_repository = sensors_repository
 
     def get_value(self, token_raw_value: str):
-        print('here')
         sensor = self.__sensors_repository.get(token_raw_value)
 
         if sensor.type != Sensor.TYPE_GIS:
