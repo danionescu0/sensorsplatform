@@ -16,14 +16,15 @@ from web.AlertsHandler import AlertsHandler
 container = Container()
 
 time.sleep(5)
-async_jobs = container.get('async_jobs')
+async_jobs = container.async_jobs()
+logging = container.logging()
+users_repo = container.users_repository()
+alerts_repo = container.alerts_repository()
+sensors_repo = container.sensors_repository()
+rules_repo = container.rules_repository()
+jwt_token_factory = container.jwt_token_factory()
+
 async_jobs.register_event(Event.TYPE_SENSOR_RECEIVED)
-logging = container.get('logging')
-users_repo = container.get('users_repository')
-alerts_repo = container.get('alerts_repository')
-sensors_repo = container.get('sensors_repository')
-rules_repo = container.get('rules_repository')
-jwt_token_factory = container.get('jwt_token_factory')
 
 def make_app():
     return tornado.web.Application([

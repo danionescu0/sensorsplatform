@@ -14,8 +14,8 @@ args = parser.parse_args()
 container = Container()
 
 time.sleep(5)
-async_jobs = container.get('async_jobs')
-task_runner = container.get('task_runner')
+async_jobs = container.async_jobs()
+task_runner = container.task_runner()
 
 if args.list:
     print("Available tasks:")
@@ -23,7 +23,7 @@ if args.list:
     sys.exit()
 
 event_name = task_runner.get_event_name_from_task_name(args.task)
-send_email_alert_listener = container.get('send_email_alert_listener')
+send_email_alert_listener = container.send_email_alert_listener()
 async_jobs.register_event(event_name)
 
 def callback(ch, method, properties, body):
