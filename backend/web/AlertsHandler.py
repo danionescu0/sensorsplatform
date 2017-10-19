@@ -20,7 +20,7 @@ class AlertsHandler(CorsHandler):
         if not user:
             self.set_status(404)
             return
-        alerts = self.__alerts_repository.get_for_user(user.userid)
+        alerts = self.__alerts_repository.get_for_user(user.userid, 5)
         alerts_presentation_data = []
         from_zone = tz.gettz('UTC')
         to_zone = tz.gettz('Europe/Bucharest')
