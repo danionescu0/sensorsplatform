@@ -4,6 +4,7 @@ from logging import RootLogger
 
 import config
 from listener.SendEmailAlertListener import SendEmailAlertListener
+from listener.AddAlertInHistoryListener import AddAlertInHistoryListener
 from lock.RuleTimedLock import RuleTimedLock
 from lock.TimedLock import TimedLock
 from repository.RulesRepository import RulesRepository
@@ -50,6 +51,10 @@ class Container():
     def send_email_alert_listener(self) -> SendEmailAlertListener:
         return SendEmailAlertListener(self.email_sender(), self.rule_timed_lock(),
                                       self.logging())
+
+    @singleton
+    def add_alert_in_history_listener(self) -> AddAlertInHistoryListener:
+        return AddAlertInHistoryListener(self.alerts_repository())
 
     @singleton
     def valid_rule_event(self) -> ValidRuleEvent:

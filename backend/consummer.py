@@ -24,6 +24,7 @@ if args.list:
 
 event_name = task_runner.get_event_name_from_task_name(args.task)
 send_email_alert_listener = container.send_email_alert_listener()
+add_alerts_in_history_listener = container.add_alert_in_history_listener()
 async_jobs.register_event(event_name)
 
 def callback(ch, method, properties, body):
