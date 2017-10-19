@@ -16,8 +16,13 @@ class AlertRepository(AbstractMongoRepository):
 
         return self.get_collection().insert_one(alert_mongodb_model).inserted_id
 
-    def get_for_user(self, userid: str) -> List[Alert]:
-        return self.__hidrate(self.get_collection().find({'userid' : userid}))
+    def get_for_user(self, userid: str, limit: int) -> List[Alert]:
+        data = self.get_collection()\
+                    .find({'userid' : userid})\
+                    .sort([('timestamp', -1)])\
+                    .limit(limit)
+
+        return self.__hidrate(data)
 
     def __hidrate(self, raw_data):
         alerts = []
