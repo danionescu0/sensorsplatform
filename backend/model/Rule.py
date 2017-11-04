@@ -4,6 +4,7 @@ from typing import List
 class Rule:
     TRIGGER_EMAIL = 'email'
     TRIGGER_SMS = 'sms'
+    TRIGGER_VOICE_CALL = 'voice'
     trigger_min_interval = 0
 
     def __init__(self, id: str, userid: str, rule_name: str, rule_text: str, triggers: List[str]) -> None:

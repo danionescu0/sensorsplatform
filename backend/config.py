@@ -21,3 +21,9 @@ email = {
     'password': '', # sender password
     'notifiedAddress': '' # receiving email
 }
+
+telestax = {
+    'voice_url' : 'https://cloud.restcomm.com:443/restcomm-rvd/services/apps/api_token/start',
+    'token' : '',
+    'from_number' : '12345'
+}
