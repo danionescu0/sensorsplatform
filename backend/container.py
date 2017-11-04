@@ -4,6 +4,7 @@ from logging import RootLogger
 
 import config
 from listener.SendEmailAlertListener import SendEmailAlertListener
+from listener.VoiceCallAlertListener import VoiceCallAlertListener
 from listener.AddAlertInHistoryListener import AddAlertInHistoryListener
 from lock.RuleTimedLock import RuleTimedLock
 from lock.TimedLock import TimedLock
@@ -26,6 +27,8 @@ from security.JwtTokenFactory import JwtTokenFactory
 from services.AsyncJobs import AsyncJobs
 from services.EmailSender import EmailSender
 from services.LoggingConfig import LoggingConfig
+from services.VoiceCall import VoiceCall
+from services.TelestaxVoiceCall import TelestaxVoiceCall
 from sync_events.ValidRuleEvent import ValidRuleEvent
 from tasks.RulesEvaluator import RulesEvaluator
 from tasks.StoreMomentaryData import StoreMomentaryData
@@ -51,6 +54,15 @@ class Container():
     def send_email_alert_listener(self) -> SendEmailAlertListener:
         return SendEmailAlertListener(self.email_sender(), self.rule_timed_lock(),
                                       self.logging())
+
+    @singleton
+    def send_email_alert_listener(self) -> VoiceCallAlertListener:
+        return VoiceCallAlertListener(self.telestax_voice_call(), self.rule_timed_lock(),
+                                      self.users_repository(), self.logging())
+
+    @singleton
+    def telestax_voice_call(self) -> VoiceCall:
+        return TelestaxVoiceCall(config.telestax['voice_url'], config.telestax['from_number'], config.telestax['token'])
 
     @singleton
     def add_alert_in_history_listener(self) -> AddAlertInHistoryListener:
