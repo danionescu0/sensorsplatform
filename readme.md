@@ -1,4 +1,4 @@
-#Motivation
+# Motivation
 In the IOT era being connected and informed all the time is the thing that matters. 
 
 This platform enables you to make rapid decisions and possibly prevent human or property loss.
@@ -6,9 +6,8 @@ This platform enables you to make rapid decisions and possibly prevent human or 
 
 My vision implies that we connect existing resources (sensors, data sources) and manage them without any programming knowledge  in a simple web interface.
 
-For example using data from gps devices from a fleet of cars minimal or maximal distances car alerts can be emited or maybe maximum speed limits exceded alerts.
-
-Another example might might involve wearhouse monitoring where alerts for fire, gas water etc might be emitted and even IFTT connected actuators might close the water or gas valves 
+For example using data from gps devices from a fleet of cars minimal or maximal distances car alerts can be emited 
+or maybe maximum speed limits exceded alerts.
 
 So what should the platform do, to enable these things:
 
@@ -19,30 +18,30 @@ So what should the platform do, to enable these things:
 * Big Data analysis 
 * Integrate actuator platforms like IFTTT to control the psichical world
 
-#Diagrams
+# Diagrams
 
-##Platform overview
+## Platform overview
 ![platform_overview.png](https://github.com/danionescu0/sensorsplatform/blob/master/media/platform_overview.png)
 
-##Sensors deployment
+## Sensors deployment
 ![sensor_deployment.png](https://github.com/danionescu0/sensorsplatform/blob/master/media/sensor_deployment.png)
 
-##Internal structure
+## Internal structure
 ![internal_structure.png](https://github.com/danionescu0/sensorsplatform/blob/master/media/internal_structure.png)
 
-#Screenshots
+# Screenshots
 
-##Add rule
+## Add rule
 ![multisensorplatform-add-rule.jpg](https://github.com/danionescu0/sensorsplatform/blob/master/media/multisensorplatform-add-rule.jpg)
 
-##Dashboard
+## Dashboard
 ![multisensorplatform-dashboard.png](https://github.com/danionescu0/sensorsplatform/blob/master/media/multisensorplatform-dashboard.png)
 
-##Sensor page
+## Sensor page
 ![multisensorplatform-sensor-page.jpg](https://github.com/danionescu0/sensorsplatform/blob/master/media/multisensorplatform-sensor-page.jpg)
 
 
-#Posible usecases
+# Posible usecases
 
 1. Basement / warehouses monitoring
 
@@ -112,7 +111,9 @@ The algorithms will surpass our own understanding of data and find these helpful
 
 This means that after a system is deployed and sufficient data is gathered, all the users of the system will benefit from it afterwards. For example we may detect a stroke before it happens or find parking hotspots before they occur.
 
-#Manually running project
+
+
+# Manually running project
 
 Start rabbitmq, redis, mongodb 
 
@@ -122,14 +123,14 @@ python3 consummer.py --task store_momentary_data
 python3 consummer.py --task rules_evaluator
 ````
 
-#Running with docker-compose
+# Running with docker-compose
 
 ````
 cd project-directory/backend
 docker-compose -f docker-services.yml -f docker-python.yml up -d
 
 ````
-#Running ui
+# Running ui
 
 ````
 cd project-directory/ui
@@ -140,7 +141,7 @@ cd project-directory/ui
 
 
 
-#Databases
+# Databases
 * RedisIo
   - for holding "locks"
 * MongoDb
