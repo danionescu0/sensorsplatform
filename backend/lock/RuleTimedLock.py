@@ -1,6 +1,7 @@
 from lock.TimedLock import TimedLock
 from model.Rule import Rule
 
+
 class RuleTimedLock:
     RULE_LOCK_KEY = 'RULE_LOCK_{0}'
 

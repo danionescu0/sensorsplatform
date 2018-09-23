@@ -1,5 +1,6 @@
 import abc
 
+
 class Expression(metaclass=abc.ABCMeta):
     keycount = 0
 

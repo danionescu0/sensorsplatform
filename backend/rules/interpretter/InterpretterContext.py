@@ -1,5 +1,6 @@
 from rules.interpretter.Expression import Expression
 
+
 class InterpretterContext:
     def __init__(self):
         self.__expressions = {}

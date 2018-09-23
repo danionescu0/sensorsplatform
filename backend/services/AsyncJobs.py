@@ -3,6 +3,7 @@ import pickle
 
 from model.Event import Event
 
+
 class AsyncJobs:
     def __init__(self, host) -> None:
         self.__host = host

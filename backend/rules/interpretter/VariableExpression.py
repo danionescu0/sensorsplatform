@@ -1,6 +1,6 @@
-
 from rules.interpretter.Expression import Expression
 from rules.interpretter.InterpretterContext import InterpretterContext
+
 
 class VariableExpression(Expression):
     def __init__(self, name: str, value):

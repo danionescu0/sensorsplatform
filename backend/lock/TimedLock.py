@@ -1,5 +1,6 @@
 import redis
 
+
 class TimedLock:
     DATABASE = 0
 
@@ -18,7 +19,7 @@ class TimedLock:
         return True
 
     def __get_client(self):
-        if (None != self.__client):
+        if None != self.__client:
             return self.__client
 
         self.client = redis.StrictRedis(host = self.__redis_host, port = self.__redis_port, db = self.DATABASE)

@@ -3,6 +3,7 @@ import abc
 from rules.interpretter.Expression import Expression
 from rules.interpretter.InterpretterContext import InterpretterContext
 
+
 class OperatorExpression(Expression):
     def __init__(self, left_operator, right_operator):
         super(OperatorExpression, self).__init__()

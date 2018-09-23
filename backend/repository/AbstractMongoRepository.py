@@ -1,5 +1,5 @@
-
 from pymongo import MongoClient
+
 
 class AbstractMongoRepository():
     DATABASE_NAME = 'multi_sensor_platform'

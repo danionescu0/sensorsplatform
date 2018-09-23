@@ -10,6 +10,7 @@ from rules.parser.Token import Token
 from rules.parser.Tokenizer import Tokenizer
 from rules.interpretter.Expression import Expression
 
+
 class ExpressionBuilder:
     current_token_index = 0
 

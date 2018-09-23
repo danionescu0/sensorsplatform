@@ -8,6 +8,7 @@ from repository.AlertRepository import AlertRepository
 from repository.RulesRepository import RulesRepository
 from repository.UsersRepository import UsersRepository
 
+
 class AlertsHandler(CorsHandler):
     def initialize(self, alerts_repo: AlertRepository, rules_repo: RulesRepository, users_repo: UsersRepository):
         self.__alerts_repository = alerts_repo

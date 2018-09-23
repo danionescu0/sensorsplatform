@@ -8,7 +8,7 @@ redis = {
 }
 
 web = {
-    'jwt_secret': ''
+    'jwt_secret': 'jwt_secret'
 }
 
 logging = {
@@ -23,7 +23,7 @@ email = {
 }
 
 telestax = {
-    'voice_url' : 'https://cloud.restcomm.com:443/restcomm-rvd/services/apps/api_token/start',
+    'voice_url' : '',
     'token' : '',
-    'from_number' : '12345'
+    'from_number' : ''
 }

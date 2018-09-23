@@ -1,6 +1,7 @@
 from typing import List
 from typing import Tuple
 
+
 class Sensor():
     TYPE_HUMIDITY = 'humidity'
     TYPE_TEMPERATURE = 'temperature'

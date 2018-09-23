@@ -4,6 +4,7 @@ from repository.SensorsRepository import SensorsRepository
 from model.Event import Event
 from tasks.BaseTask import BaseTask
 
+
 class StoreDurableData(BaseTask):
     def __init__(self, sensors_repository: SensorsRepository,  logging: RootLogger) -> None:
         self.__sensors_repository = sensors_repository

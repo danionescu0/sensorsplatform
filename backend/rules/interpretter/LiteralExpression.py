@@ -1,6 +1,7 @@
 from rules.interpretter.Expression import Expression
 from rules.interpretter.InterpretterContext import InterpretterContext
 
+
 class LiteralExpression(Expression):
     def __init__(self, value):
         super(LiteralExpression, self).__init__()

@@ -4,7 +4,6 @@ from web.CorsHandler import CorsHandler
 
 
 class AuthHandler(CorsHandler):
-
     def initialize(self, users_repo: UsersRepository, token_factory: JwtTokenFactory):
         self.__users_repo = users_repo
         self.__token_factory = token_factory

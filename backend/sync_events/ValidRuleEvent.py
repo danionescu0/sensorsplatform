@@ -2,6 +2,7 @@ from blinker import signal
 
 from model.Rule import Rule
 
+
 class ValidRuleEvent:
     NAME = 'valid_rule_event'
 

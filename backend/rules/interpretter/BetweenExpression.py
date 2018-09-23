@@ -1,6 +1,7 @@
 from rules.interpretter.Expression import Expression
 from rules.interpretter.InterpretterContext import InterpretterContext
 
+
 class BetweenExpression(Expression):
     def __init__(self, reference: Expression, left_operator, right_operator):
         super(BetweenExpression, self).__init__()

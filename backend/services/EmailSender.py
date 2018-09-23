@@ -2,6 +2,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+
 class EmailSender():
     def __init__(self, address: str, password: str, notified_address: str):
         self.address = address
